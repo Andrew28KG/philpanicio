@@ -1,0 +1,183 @@
+{
+  "name": "Philpanicio",
+  "whatsapp": "6287774435888",
+  "email": "philpanicio@gmail.com",
+  "social": {
+    "tiktok": {
+      "handle": "@pannicio",
+      "url": "https://www.tiktok.com/@pannicio"
+    }
+  },
+  "currency": "IDR",
+  "tagline": {
+    "id": "Roti & kue rumahan, hangat dari oven",
+    "en": "Homemade breads & cakes, warm from the oven"
+  },
+  "seo": {
+    "title": {
+      "id": "Philpanicio — Roti & Kue Rumahan",
+      "en": "Philpanicio — Homemade Breads & Cakes"
+    },
+    "description": {
+      "id": "Kue dan roti buatan tangan oleh Phillip. Pesan langsung lewat WhatsApp untuk ulang tahun, arisan, atau sekadar teman ngopi.",
+      "en": "Handmade cakes and breads by Phillip. Order straight on WhatsApp for birthdays, gatherings, or just your afternoon coffee."
+    },
+    "image": "og/og-cover.jpg"
+  },
+  "nav": {
+    "bakes": { "id": "Kue Andalan", "en": "Signature Bakes" },
+    "gallery": { "id": "Etalase", "en": "Display Case" },
+    "story": { "id": "Cerita Kami", "en": "Our Story" },
+    "order": { "id": "Pesan", "en": "Order" }
+  },
+  "ui": {
+    "skip": { "id": "Langsung ke isi", "en": "Skip to content" },
+    "themeToggle": { "id": "Ganti mode terang/gelap", "en": "Toggle light/dark mode" },
+    "langToggle": { "id": "Switch to English", "en": "Ganti ke Bahasa Indonesia" },
+    "close": { "id": "Tutup", "en": "Close" },
+    "viewDetails": { "id": "Lihat detail", "en": "View details" },
+    "orderThis": { "id": "Pesan yang ini", "en": "Order this" },
+    "unavailable": { "id": "Sedang tidak tersedia", "en": "Currently unavailable" },
+    "floatingWa": { "id": "Chat kami di WhatsApp", "en": "Chat with us on WhatsApp" },
+    "swipeHint": { "id": "Geser untuk melihat", "en": "Swipe to look around" },
+    "slide": { "id": "Foto", "en": "Photo" },
+    "categories": {
+      "cake": { "id": "Kue", "en": "Cake" },
+      "bread": { "id": "Roti", "en": "Bread" }
+    }
+  },
+  "hero": {
+    "eyebrow": { "id": "Dapur rumahan · dibuat dengan tangan", "en": "Home kitchen · made by hand" },
+    "headline": { "id": "Hangat dari oven, untukmu.", "en": "Warm from the oven, for you." },
+    "subtext": {
+      "id": "Kue lembut dan roti harum yang dipanggang sesuai pesanan — untuk ulang tahun, kumpul keluarga, atau sekadar teman minum teh.",
+      "en": "Soft cakes and fragrant breads baked to order — for birthdays, family gatherings, or simply your afternoon tea."
+    },
+    "cta": { "id": "Pesan via WhatsApp", "en": "Order on WhatsApp" },
+    "secondary": { "id": "Lihat kue andalan", "en": "See signature bakes" },
+    "image": "hero/placeholder-hero-cake.jpg",
+    "imageAlt": {
+      "id": "Kue cokelat berlapis dengan krim dan irisan jeruk di atasnya",
+      "en": "Layered chocolate cake with cream and orange slices on top"
+    }
+  },
+  "bakes": {
+    "eyebrow": { "id": "Favorit pelanggan", "en": "Customer favourites" },
+    "title": { "id": "Kue Andalan", "en": "Signature Bakes" },
+    "intro": {
+      "id": "Ketuk salah satu untuk melihat detailnya dan pesan langsung.",
+      "en": "Tap any bake to see the details and order it straight away."
+    }
+  },
+  "gallery": {
+    "eyebrow": { "id": "Dari dapur kami", "en": "From our kitchen" },
+    "title": { "id": "Etalase", "en": "The Display Case" },
+    "intro": {
+      "id": "Sekilas dari apa yang keluar dari oven minggu ini.",
+      "en": "A peek at what's been coming out of the oven lately."
+    },
+    "items": [
+      { "image": "gallery/placeholder-gallery-01.jpg", "caption": { "id": "Kue ulang tahun stroberi", "en": "Strawberry birthday cake" } },
+      { "image": "gallery/placeholder-gallery-02.jpg", "caption": { "id": "Roti sourdough segar", "en": "Fresh sourdough loaves" } },
+      { "image": "gallery/placeholder-gallery-03.jpg", "caption": { "id": "Lapisan cokelat jeruk", "en": "Chocolate orange layers" } },
+      { "image": "gallery/placeholder-gallery-04.jpg", "caption": { "id": "Cinnamon roll pagi hari", "en": "Morning cinnamon rolls" } },
+      { "image": "gallery/placeholder-gallery-05.jpg", "caption": { "id": "Chiffon pandan", "en": "Pandan chiffon" } },
+      { "image": "gallery/placeholder-gallery-06.jpg", "caption": { "id": "Roti susu yang empuk", "en": "Pillowy milk bread" } }
+    ]
+  },
+  "story": {
+    "eyebrow": { "id": "Kenalan dengan baker-nya", "en": "Meet the baker" },
+    "title": { "id": "Cerita Kami", "en": "Our Story" },
+    "baker": "Phillip",
+    "body": {
+      "id": "Phillip jatuh cinta pada dunia baking saat kuliah Seni Kuliner di Universitas Pradita di masa pandemi, ketika dapur menjadi tempat favoritnya. Sejak lulus tahun 2023 ia terus memanggang, dan setelah dua tahun menjalankan Philpanicio dari rumah, kini ia siap berkembang — tetap membuat setiap roti dan kue dengan tangan, untuk orang-orang yang ia kenal dan sayangi.",
+      "en": "Phillip discovered his love for baking while studying Culinary Arts at Universitas Pradita during the pandemic, when the kitchen became his happy place. He's been baking professionally since graduating in 2023, and after two years of running Philpanicio from home, he's growing — still shaping every loaf and frosting every cake by hand, for the people he knows and loves."
+    },
+    "signature": { "id": "— Phillip, baker", "en": "— Phillip, baker" },
+    "image": "story/placeholder-baker-phillip.jpg",
+    "imageAlt": {
+      "id": "Ilustrasi Phillip mengenakan celemek sambil membawa kue cokelat",
+      "en": "Illustration of Phillip in his apron holding a chocolate cake"
+    },
+    "facts": [
+      { "value": "2023", "label": { "id": "mulai memanggang profesional", "en": "baking professionally since" } },
+      { "value": "100%", "label": { "id": "dibuat dengan tangan", "en": "made by hand" } }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": { "id": "Kata mereka", "en": "Kind words" },
+    "title": { "id": "Dari meja mereka", "en": "From their tables" },
+    "items": [
+      {
+        "name": "Ibu Maria",
+        "note": { "id": "Jemaat gereja", "en": "Church friend" },
+        "text": {
+          "id": "Kue ulang tahun anak saya habis dalam sepuluh menit. Lembut, tidak terlalu manis, dan cantik sekali!",
+          "en": "My son's birthday cake was gone in ten minutes. Soft, not too sweet, and so pretty!"
+        }
+      },
+      {
+        "name": "Kak Daniel",
+        "note": { "id": "Teman keluarga", "en": "Family friend" },
+        "text": {
+          "id": "Sourdough-nya renyah di luar, lembut di dalam. Sekarang jadi langganan tiap Sabtu.",
+          "en": "The sourdough is crackly outside and soft inside. It's our Saturday ritual now."
+        }
+      },
+      {
+        "name": "Tante Lia",
+        "note": { "id": "Pelanggan setia", "en": "Regular customer" },
+        "text": {
+          "id": "Cinnamon roll-nya bikin rumah wangi seharian. Pesan lewat WhatsApp juga gampang.",
+          "en": "The cinnamon rolls made the whole house smell amazing. Ordering on WhatsApp was easy too."
+        }
+      },
+      {
+        "name": "Om Budi",
+        "note": { "id": "Acara persekutuan", "en": "Fellowship gathering" },
+        "text": {
+          "id": "Pesan 40 potong untuk acara persekutuan — semua tepat waktu dan semua orang minta lagi.",
+          "en": "Ordered 40 slices for our fellowship night — on time, and everyone asked for more."
+        }
+      }
+    ]
+  },
+  "order": {
+    "eyebrow": { "id": "Siap memesan?", "en": "Ready to order?" },
+    "title": { "id": "Ayo, kami panaskan ovennya.", "en": "Let's warm up the oven." },
+    "body": {
+      "id": "Kirim pesan dengan kue atau roti yang kamu mau, tanggal, dan jumlahnya. Kami akan membalas secepatnya untuk konfirmasi harga dan pengambilan.",
+      "en": "Send us the cake or bread you'd like, the date, and how many. We'll reply as soon as we can to confirm the price and pickup."
+    },
+    "note": {
+      "id": "Pesanan sebaiknya 2–3 hari sebelumnya.",
+      "en": "Please order 2–3 days ahead."
+    },
+    "whatsapp": { "id": "Chat di WhatsApp", "en": "Chat on WhatsApp" },
+    "email": { "id": "Kirim email", "en": "Send an email" },
+    "emailSubject": { "id": "Pesanan Philpanicio", "en": "Philpanicio order" }
+  },
+  "footer": {
+    "line": {
+      "id": "Dipanggang dengan cinta di dapur rumah kami.",
+      "en": "Baked with love in our home kitchen."
+    },
+    "contact": { "id": "Kontak", "en": "Contact" },
+    "follow": { "id": "Ikuti kami", "en": "Follow us" }
+  },
+  "messages": {
+    "greeting": {
+      "id": "Halo Philpanicio! Saya mau tanya-tanya dan pesan kue/roti, ya 😊",
+      "en": "Hi Philpanicio! I'd like to ask about ordering some cakes/bread 😊"
+    },
+    "product": {
+      "id": "Halo Philpanicio! Saya mau pesan *{product}* ({price}). Apakah bisa untuk tanggal ...?",
+      "en": "Hi Philpanicio! I'd like to order *{product}* ({price}). Is it available for ...?"
+    },
+    "cartIntro": {
+      "id": "Halo Philpanicio! Saya mau pesan:",
+      "en": "Hi Philpanicio! I'd like to order:"
+    },
+    "cartTotal": { "id": "Total", "en": "Total" }
+  }
+}

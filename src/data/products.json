@@ -1,0 +1,80 @@
+[
+  {
+    "id": "chocolate-orange-cake",
+    "name": { "id": "Kue Cokelat Jeruk", "en": "Chocolate Orange Layer Cake" },
+    "description": {
+      "id": "Bolu cokelat lembap berlapis krim vanila dan selai stroberi, dihias irisan jeruk manis. Ukuran 18 cm, cukup untuk 10–12 orang.",
+      "en": "Moist chocolate sponge layered with vanilla cream and strawberry jam, topped with candied orange. 18 cm, serves 10–12."
+    },
+    "price": 350000,
+    "category": "cake",
+    "image": "products/cakes/placeholder-chocolate-orange-cake.jpg",
+    "featured": true,
+    "available": true
+  },
+  {
+    "id": "strawberry-shortcake",
+    "name": { "id": "Strawberry Shortcake", "en": "Strawberry Shortcake" },
+    "description": {
+      "id": "Sponge cake ringan dengan whipped cream segar dan stroberi utuh. Manisnya pas, cocok untuk ulang tahun.",
+      "en": "Feather-light sponge with fresh whipped cream and whole strawberries. Gently sweet — a birthday favourite."
+    },
+    "price": 300000,
+    "category": "cake",
+    "image": "products/cakes/placeholder-strawberry-shortcake.jpg",
+    "featured": true,
+    "available": true
+  },
+  {
+    "id": "pandan-chiffon",
+    "name": { "id": "Chiffon Pandan", "en": "Pandan Chiffon Cake" },
+    "description": {
+      "id": "Chiffon tinggi dan empuk dengan pandan asli dan santan. Wangi, ringan, dan tidak terlalu manis.",
+      "en": "Tall, airy chiffon made with real pandan and coconut milk. Fragrant, light and not too sweet."
+    },
+    "price": 150000,
+    "category": "cake",
+    "image": "products/cakes/placeholder-pandan-chiffon.jpg",
+    "featured": false,
+    "available": true
+  },
+  {
+    "id": "sourdough-loaf",
+    "name": { "id": "Roti Sourdough", "en": "Country Sourdough Loaf" },
+    "description": {
+      "id": "Difermentasi perlahan selama 24 jam. Kulitnya renyah, bagian dalamnya lembut dan sedikit asam.",
+      "en": "Slow-fermented for 24 hours. A crackly crust with a soft, gently tangy crumb."
+    },
+    "price": 85000,
+    "category": "bread",
+    "image": "products/breads/placeholder-sourdough-loaf.jpg",
+    "featured": true,
+    "available": true
+  },
+  {
+    "id": "cinnamon-rolls",
+    "name": { "id": "Cinnamon Roll (isi 6)", "en": "Cinnamon Rolls (box of 6)" },
+    "description": {
+      "id": "Gulungan roti lembut dengan kayu manis dan gula aren, disiram cream cheese frosting.",
+      "en": "Soft swirls of cinnamon and palm sugar, finished with cream cheese frosting."
+    },
+    "price": 120000,
+    "category": "bread",
+    "image": "products/breads/placeholder-cinnamon-rolls.jpg",
+    "featured": false,
+    "available": true
+  },
+  {
+    "id": "milk-bread",
+    "name": { "id": "Roti Susu Hokkaido", "en": "Hokkaido Milk Bread" },
+    "description": {
+      "id": "Roti tawar susu yang super lembut dan sobek-sobek. Enak dimakan langsung atau dipanggang.",
+      "en": "Cloud-soft milk bread that pulls apart in strands. Lovely plain or toasted."
+    },
+    "price": 65000,
+    "category": "bread",
+    "image": "products/breads/placeholder-milk-bread.jpg",
+    "featured": true,
+    "available": false
+  }
+]
