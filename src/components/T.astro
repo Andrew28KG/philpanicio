@@ -1,0 +1,21 @@
+---
+// Renders text in both languages; CSS shows the one picked by the visitor.
+import type { Localized } from '../lib/i18n';
+
+interface Props {
+  v: Localized;
+}
+
+const { v } = Astro.props;
+---
+
+{
+  typeof v === 'string' ? (
+    v
+  ) : (
+    <>
+      <span class="i18n" lang="id">{v.id}</span>
+      <span class="i18n" lang="en">{v.en}</span>
+    </>
+  )
+}

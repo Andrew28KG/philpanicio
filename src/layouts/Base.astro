@@ -1,0 +1,98 @@
+---
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { withBase } from '../lib/paths';
+import { DEFAULT_LANG } from '../lib/i18n';
+
+interface Props {
+  title?: { id: string; en: string };
+  description?: { id: string; en: string };
+}
+
+const { title = site.seo.title, description = site.seo.description } = Astro.props;
+
+// Open Graph image must be an absolute URL for WhatsApp/Facebook previews.
+const og = await getImage({ src: resolveImage(site.seo.image), width: 1200, height: 630, format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const touchIcon = await getImage({ src: resolveImage('brand/logo-mark.jpg'), width: 180, height: 180, format: 'png' });
+---
+
+<html lang={DEFAULT_LANG} data-lang={DEFAULT_LANG}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Set language, theme and motion before the first paint (no flashing). -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        var store;
+        try {
+          store = window.localStorage;
+        } catch (e) {}
+        var get = function (k) {
+          try {
+            return store && store.getItem(k);
+          } catch (e) {
+            return null;
+          }
+        };
+        var q = new URLSearchParams(location.search).get('lang');
+        var lang = q === 'en' || q === 'id' ? q : get('pp-lang');
+        if (lang !== 'en' && lang !== 'id') lang = 'id';
+        d.lang = lang;
+        d.setAttribute('data-lang', lang);
+        var theme = get('pp-theme');
+        if (theme === 'dark' || theme === 'light') d.setAttribute('data-theme', theme);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          d.classList.add('motion-pending');
+          setTimeout(function () {
+            d.classList.remove('motion-pending');
+          }, 3000);
+        }
+      })();
+    </script>
+
+    <title data-i18n-title-id={title.id} data-i18n-title-en={title.en}>{title.id}</title>
+    <meta name="description" content={description.id} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#fffbf4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1512" media="(prefers-color-scheme: dark)" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="apple-touch-icon" href={touchIcon.src} />
+
+    <!-- Link previews (WhatsApp, Facebook, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title.id} />
+    <meta property="og:description" content={description.id} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:secure_url" content={ogUrl} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline.id}`} />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title.id} />
+    <meta name="twitter:description" content={description.id} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Nunito+Sans:wght@400..800&display=swap"
+    />
+    <slot name="head" />
+  </head>
+  <body id="top">
+    <slot />
+  </body>
+</html>

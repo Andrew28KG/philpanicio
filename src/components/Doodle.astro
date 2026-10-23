@@ -1,0 +1,95 @@
+---
+// Hand-drawn style SVG doodles. Colour comes from `currentColor`.
+interface Props {
+  name: 'wheat' | 'whisk' | 'sprinkles' | 'rolling-pin' | 'heart' | 'swirl' | 'quote';
+  class?: string;
+  style?: string;
+}
+
+const { name, class: className = '', style } = Astro.props;
+---
+
+<svg
+  class:list={['doodle', className]}
+  style={style}
+  viewBox="0 0 120 120"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="3.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    name === 'wheat' && (
+      <g>
+        <path d="M60 112 C59 86 61 60 60 22" />
+        <path d="M60 30 c-10-4-14-12-13-20 c9 2 14 9 13 20z" />
+        <path d="M60 30 c10-4 14-12 13-20 c-9 2-14 9-13 20z" />
+        <path d="M60 48 c-12-3-17-11-17-20 c10 2 16 10 17 20z" />
+        <path d="M60 48 c12-3 17-11 17-20 c-10 2-16 10-17 20z" />
+        <path d="M60 66 c-12-3-17-11-17-20 c10 2 16 10 17 20z" />
+        <path d="M60 66 c12-3 17-11 17-20 c-10 2-16 10-17 20z" />
+        <path d="M60 84 c-11-3-16-10-16-19 c9 2 15 9 16 19z" />
+        <path d="M60 84 c11-3 16-10 16-19 c-9 2-15 9-16 19z" />
+      </g>
+    )
+  }
+  {
+    name === 'whisk' && (
+      <g>
+        <path d="M58 114 l2-38" />
+        <path d="M53 114 h14" />
+        <path d="M60 76 C38 70 30 30 46 12 C54 4 66 4 74 12 C90 30 82 70 60 76z" />
+        <path d="M60 76 C48 64 46 30 54 10" />
+        <path d="M60 76 C72 64 74 30 66 10" />
+        <path d="M60 76 L60 8" />
+      </g>
+    )
+  }
+  {
+    name === 'sprinkles' && (
+      <g stroke-width="5">
+        <path d="M18 28 l10 6" />
+        <path d="M58 16 l-4 11" />
+        <path d="M92 30 l10-5" />
+        <path d="M30 70 l-9 7" />
+        <path d="M70 58 l11 3" />
+        <path d="M52 96 l4 11" />
+        <path d="M96 84 l-6 9" />
+        <circle cx="40" cy="48" r="1.5" />
+        <circle cx="84" cy="106" r="1.5" />
+        <circle cx="14" cy="102" r="1.5" />
+      </g>
+    )
+  }
+  {
+    name === 'rolling-pin' && (
+      <g>
+        <rect x="26" y="48" width="68" height="24" rx="12" transform="rotate(-24 60 60)" />
+        <path d="M14 82 l14-6" />
+        <path d="M92 44 l14-6" />
+        <path d="M44 62 c6-2 10-4 16-6 M54 72 c6-2 10-4 16-6" stroke-width="2" />
+      </g>
+    )
+  }
+  {
+    name === 'heart' && (
+      <path d="M60 100 C30 80 14 62 18 42 C22 24 44 18 60 38 C76 18 98 24 102 42 C106 62 90 80 60 100z" />
+    )
+  }
+  {
+    name === 'swirl' && (
+      <path d="M12 70 C26 40 46 40 52 58 C58 76 40 84 36 70 C30 50 64 32 80 48 C94 62 86 86 108 84" />
+    )
+  }
+  {
+    name === 'quote' && (
+      <g stroke-width="0" fill="currentColor">
+        <path d="M18 78 c0-22 10-38 30-46 l4 8 c-12 6-17 14-17 22 h14 v26 h-31z" />
+        <path d="M64 78 c0-22 10-38 30-46 l4 8 c-12 6-17 14-17 22 h14 v26 h-31z" />
+      </g>
+    )
+  }
+</svg>

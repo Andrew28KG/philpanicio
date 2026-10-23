@@ -1,0 +1,185 @@
+---
+import { Image } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import T from './T.astro';
+
+const links = [
+  { href: '#bakes', label: site.nav.bakes },
+  { href: '#gallery', label: site.nav.gallery },
+  { href: '#story', label: site.nav.story },
+  { href: '#order', label: site.nav.order },
+];
+---
+
+<a class="skip-link" href="#main"><T v={site.ui.skip} /></a>
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="#top">
+      <Image
+        class="brand-mark"
+        src={resolveImage('brand/logo-mark.jpg')}
+        width={44}
+        height={44}
+        densities={[1, 2]}
+        alt=""
+        loading="eager"
+      />
+      <span class="brand-name">{site.name}</span>
+    </a>
+
+    <nav class="nav" aria-label="Menu">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>
+                <T v={link.label} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <button class="tool lang-toggle" type="button" data-toggle-lang>
+        <span class="i18n" lang="id" aria-hidden="true">EN</span>
+        <span class="i18n" lang="en" aria-hidden="true">ID</span>
+        <span class="sr-only"><T v={site.ui.langToggle} /></span>
+      </button>
+      <button class="tool theme-toggle" type="button" data-toggle-theme>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"></path>
+        </svg>
+        <span class="sr-only"><T v={site.ui.themeToggle} /></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding-top: env(safe-area-inset-top, 0px);
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .site-header.is-scrolled {
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: var(--header-h);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--wood);
+    box-shadow: var(--shadow-sm);
+  }
+  .brand-name {
+    font-family: var(--font-script);
+    font-size: 1.85rem;
+    line-height: 1;
+    color: var(--heading);
+    letter-spacing: 0.01em;
+  }
+  .nav {
+    display: none;
+  }
+  .nav ul {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav a {
+    display: block;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-soft);
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+  .nav a:hover {
+    color: var(--text);
+    background: var(--bg-alt);
+  }
+  .tools {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .tool {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow:
+      inset 0 0 0 1.5px var(--line),
+      var(--shadow-sm);
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    transition: transform 0.2s var(--ease-out);
+  }
+  .tool:hover {
+    transform: translateY(-1px);
+  }
+  .tool svg {
+    width: 20px;
+    height: 20px;
+  }
+  .icon-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-sun {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .icon-moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .icon-sun {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .icon-moon {
+      display: none;
+    }
+  }
+  @media (min-width: 860px) {
+    .nav {
+      display: block;
+    }
+  }
+</style>

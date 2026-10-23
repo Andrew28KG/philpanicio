@@ -1,0 +1,362 @@
+/* ------------------------------------------------------------------
+   Philpanicio — "Warm from the oven"
+   Palette taken from the logo: cream doorway, toasted wood sign,
+   cocoa arch, honey-orange slices and a touch of strawberry.
+------------------------------------------------------------------- */
+
+:root {
+  /* light (default) */
+  --bg: #fffbf4;            /* flour */
+  --bg-alt: #f6e6cc;        /* cream */
+  --surface: #fff8ee;
+  --surface-strong: #ffffff;
+  --text: #3b2a22;          /* cocoa */
+  --text-soft: #6b4f3e;
+  --heading: #33231c;
+  --brand: #8a5a35;         /* crust */
+  --wood: #c98b4e;          /* toasted wood */
+  --accent: #e3a23b;        /* honey */
+  --accent-strong: #cf8a1f;
+  --accent-ink: #2e1d12;
+  --berry: #d9464e;
+  --stone: #cfc6c4;
+  --line: rgba(59, 42, 34, 0.14);
+  --invert-bg: #3b2a22;
+  --invert-text: #f6e6cc;
+  --dust: 255, 255, 255;
+  --shadow-sm: 0 2px 6px rgba(110, 66, 30, 0.08), 0 1px 2px rgba(110, 66, 30, 0.08);
+  --shadow: 0 14px 34px -14px rgba(110, 66, 30, 0.35), 0 4px 10px -4px rgba(110, 66, 30, 0.16);
+  --shadow-lg: 0 30px 60px -24px rgba(110, 66, 30, 0.45);
+  --grain-opacity: 0.5;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-script: 'Caveat Brush', 'Segoe Print', 'Bradley Hand', cursive;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --radius-sm: 12px;
+  --radius: 22px;
+  --radius-lg: 36px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --max: 1180px;
+  --header-h: 64px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+/* dark: follow the phone setting unless the visitor picked light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #1c1512;
+    --bg-alt: #251c17;
+    --surface: #2a201b;
+    --surface-strong: #33271f;
+    --text: #f6e6cc;
+    --text-soft: #d6c0a4;
+    --heading: #fbefdc;
+    --brand: #e6b47c;
+    --wood: #d99a5b;
+    --accent: #f0b24f;
+    --accent-strong: #f5c26e;
+    --accent-ink: #24160d;
+    --berry: #ec6870;
+    --stone: #6b5e58;
+    --line: rgba(246, 230, 204, 0.14);
+    --invert-bg: #f6e6cc;
+    --invert-text: #2a1c14;
+    --dust: 246, 230, 204;
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.7), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 30px 60px -24px rgba(0, 0, 0, 0.8);
+    --grain-opacity: 0.35;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #1c1512;
+  --bg-alt: #251c17;
+  --surface: #2a201b;
+  --surface-strong: #33271f;
+  --text: #f6e6cc;
+  --text-soft: #d6c0a4;
+  --heading: #fbefdc;
+  --brand: #e6b47c;
+  --wood: #d99a5b;
+  --accent: #f0b24f;
+  --accent-strong: #f5c26e;
+  --accent-ink: #24160d;
+  --berry: #ec6870;
+  --stone: #6b5e58;
+  --line: rgba(246, 230, 204, 0.14);
+  --invert-bg: #f6e6cc;
+  --invert-text: #2a1c14;
+  --dust: 246, 230, 204;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.7), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 30px 60px -24px rgba(0, 0, 0, 0.8);
+  --grain-opacity: 0.35;
+  color-scheme: dark;
+}
+
+/* ---------- language switching (both languages are in the HTML) ---------- */
+:root[data-lang='id'] .i18n[lang='en'],
+:root[data-lang='en'] .i18n[lang='id'] {
+  display: none !important;
+}
+
+/* ---------- base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text);
+  background-color: var(--bg);
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* paper grain — a tiny SVG noise tile, no image request */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--heading);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: var(--invert-bg);
+  color: var(--invert-text);
+  font-weight: 700;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+}
+
+/* ---------- layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(4.5rem, 11vw, 8.5rem);
+}
+
+.section-head {
+  max-width: 40rem;
+  margin-bottom: clamp(2rem, 5vw, 3.25rem);
+}
+.section-head.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-script);
+  font-size: 1.45rem;
+  line-height: 1.1;
+  color: var(--brand);
+  margin-bottom: 0.4rem;
+  transform: rotate(-2deg);
+}
+
+.section-title {
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+}
+
+.section-intro {
+  margin-top: 0.9rem;
+  color: var(--text-soft);
+  font-size: 1.08rem;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: var(--accent-strong);
+}
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+.btn svg {
+  width: 1.3em;
+  height: 1.3em;
+  flex: none;
+}
+
+.btn-ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  box-shadow: inset 0 0 0 2px var(--line);
+}
+.btn-ghost:hover {
+  background: var(--bg-alt);
+  box-shadow: inset 0 0 0 2px var(--wood);
+}
+
+.btn-dark {
+  --btn-bg: var(--invert-bg);
+  --btn-fg: var(--invert-text);
+}
+.btn-dark:hover {
+  background: var(--brand);
+}
+
+/* ---------- arch frame (echoes the logo's doorway) ---------- */
+.arch {
+  border-radius: 999px 999px var(--radius) var(--radius);
+  overflow: hidden;
+  background: var(--bg-alt);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---------- doodles ---------- */
+.doodle {
+  position: absolute;
+  color: var(--wood);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* hero letters start hidden only when the motion script is going to run */
+.motion-pending .hero-title .ch {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
