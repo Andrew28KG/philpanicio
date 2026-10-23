@@ -1,0 +1,73 @@
+---
+import site from '../data/site.json';
+import { getFeatured } from '../lib/products';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+import ProductCard from './ProductCard.astro';
+import ProductModal from './ProductModal.astro';
+
+const featured = getFeatured();
+const { bakes } = site;
+---
+
+<section class="section bakes" id="bakes" aria-labelledby="bakes-title">
+  <Doodle name="rolling-pin" class="d-pin" />
+  <Doodle name="sprinkles" class="d-sprinkle" />
+  <div class="container">
+    <div class="section-head center" data-reveal>
+      <p class="eyebrow"><T v={bakes.eyebrow} /></p>
+      <h2 class="section-title" id="bakes-title"><T v={bakes.title} /></h2>
+      <p class="section-intro"><T v={bakes.intro} /></p>
+    </div>
+
+    <ul class="bakes-grid" role="list">
+      {
+        featured.map((product) => (
+          <li data-reveal-item>
+            <ProductCard product={product} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  {featured.map((product) => <ProductModal product={product} />)}
+</section>
+
+<style>
+  .bakes {
+    overflow-x: clip;
+  }
+  .bakes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.8rem, 3vw, 1.75rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .d-pin {
+    width: 110px;
+    top: 2.5rem;
+    left: -1.5rem;
+    transform: rotate(-12deg);
+  }
+  .d-sprinkle {
+    width: 80px;
+    right: 0.5rem;
+    top: 5rem;
+    color: var(--berry);
+    opacity: 0.6;
+  }
+  @media (min-width: 1000px) {
+    .bakes-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .d-pin {
+      left: 4%;
+      width: 150px;
+    }
+    .d-sprinkle {
+      right: 8%;
+    }
+  }
+</style>

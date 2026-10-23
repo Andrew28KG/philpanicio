@@ -60,10 +60,26 @@ function initHero() {
   return canvas ? initDust(canvas) : undefined;
 }
 
+// Generic scroll reveals: [data-reveal] fades up on its own, [data-reveal-item] in staggered batches.
+function initReveals() {
+  gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
+    gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
+  });
+
+  const items = gsap.utils.toArray<HTMLElement>('[data-reveal-item]');
+  gsap.set(items, { y: 48, opacity: 0 });
+  ScrollTrigger.batch(items, {
+    start: 'top 90%',
+    onEnter: (batch) =>
+      gsap.to(batch, { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.09, overwrite: true }),
+  });
+  return () => gsap.set(items, { clearProps: 'all' });
+}
+
 export function initMotion() {
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const cleanups = [initSmoothScroll(), initHero()];
+    const cleanups = [initSmoothScroll(), initHero(), initReveals()];
     return () => cleanups.forEach((fn) => fn?.());
   });
   document.documentElement.classList.remove('motion-pending');

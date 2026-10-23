@@ -1,0 +1,185 @@
+---
+// A tappable product card. Opens the matching <ProductModal>. Reusable on a future menu page.
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { formatPrice, type Localized } from '../lib/i18n';
+import type { Product } from '../lib/products';
+import T from './T.astro';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const categories = site.ui.categories as Record<string, Localized>;
+const category = categories[product.category] ?? product.category;
+---
+
+<button
+  class:list={['card', { 'is-unavailable': !product.available }]}
+  type="button"
+  aria-haspopup="dialog"
+  data-open-modal={`product-${product.id}`}
+  data-product-id={product.id}
+  data-tilt
+>
+  <span class="card-media">
+    <Picture
+      src={resolveImage(product.image)}
+      formats={['avif', 'webp']}
+      widths={[280, 420, 600]}
+      sizes="(min-width: 1000px) 270px, 46vw"
+      alt=""
+      loading="lazy"
+    />
+    <span class="chip"><T v={category} /></span>
+    {
+      !product.available && (
+        <span class="badge-off">
+          <T v={site.ui.unavailable} />
+        </span>
+      )
+    }
+  </span>
+  <span class="card-body">
+    <span class="card-name"><T v={product.name} /></span>
+    <span class="card-price">{formatPrice(product.price)}</span>
+  </span>
+  <span class="card-cta" aria-hidden="true">
+    <T v={site.ui.viewDetails} />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+  </span>
+  <span class="card-glare" aria-hidden="true"></span>
+</button>
+
+<style>
+  .card {
+    --rx: 0deg;
+    --ry: 0deg;
+    --gx: 50%;
+    --gy: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0.5rem 0.85rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--shadow);
+    text-align: left;
+    cursor: pointer;
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+    transition:
+      transform 0.5s var(--ease-out),
+      box-shadow 0.3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card.is-tilting {
+    transition:
+      transform 0.12s linear,
+      box-shadow 0.3s;
+  }
+  .card:hover {
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--shadow-lg);
+  }
+  .card-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: calc(var(--radius) - 6px);
+    overflow: hidden;
+    background: var(--bg-alt);
+  }
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+  .card:hover .card-media :global(img) {
+    transform: scale(1.05);
+  }
+  .is-unavailable .card-media :global(img) {
+    filter: grayscale(0.55) brightness(0.92);
+  }
+  .chip {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge-off {
+    position: absolute;
+    inset: auto 0.5rem 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 999px;
+    background: var(--invert-bg);
+    color: var(--invert-text);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.75rem 0.35rem 0;
+    flex: 1;
+  }
+  .card-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.02rem, 3.6vw, 1.22rem);
+    line-height: 1.2;
+    color: var(--heading);
+  }
+  .card-price {
+    font-weight: 800;
+    color: var(--brand);
+    font-size: 0.95rem;
+  }
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0.55rem 0.35rem 0;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--text-soft);
+  }
+  .card-cta svg {
+    width: 15px;
+    height: 15px;
+    transition: transform 0.3s var(--ease-out);
+  }
+  .card:hover .card-cta svg {
+    transform: translateX(4px);
+  }
+  .card-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.28), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card.is-tilting .card-glare {
+    opacity: 1;
+  }
+</style>

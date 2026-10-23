@@ -1,0 +1,213 @@
+---
+// Product details in a native <dialog> (focus trap, Esc to close, inert background for free).
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { formatPrice, i18nAttrs, t, type Localized } from '../lib/i18n';
+import type { Product } from '../lib/products';
+import { productMessage, waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import WaIcon from './WaIcon.astro';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const id = `product-${product.id}`;
+const categories = site.ui.categories as Record<string, Localized>;
+const category = categories[product.category] ?? product.category;
+const orderHref = {
+  id: waLink(productMessage(product, 'id')),
+  en: waLink(productMessage(product, 'en')),
+};
+const alt = { id: t(product.name, 'id'), en: t(product.name, 'en') };
+---
+
+<dialog class="modal" id={id} aria-labelledby={`${id}-title`} data-modal data-lenis-prevent>
+  <div class="modal-inner">
+    <button class="modal-close" type="button" data-close>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      <span class="sr-only"><T v={site.ui.close} /></span>
+    </button>
+
+    <div class="modal-media">
+      <Picture
+        src={resolveImage(product.image)}
+        formats={['avif', 'webp']}
+        widths={[420, 600, 860]}
+        sizes="(min-width: 800px) 420px, 100vw"
+        loading="lazy"
+        {...i18nAttrs({ alt })}
+      />
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-chip"><T v={category} /></p>
+      <h3 class="modal-title" id={`${id}-title`}><T v={product.name} /></h3>
+      <p class="modal-price">{formatPrice(product.price)}</p>
+      <p class="modal-desc"><T v={product.description} /></p>
+
+      <div class="modal-actions" data-product-actions={product.id}>
+        {
+          product.available ? (
+            <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: orderHref })}>
+              <WaIcon />
+              <T v={site.ui.orderThis} />
+            </a>
+          ) : (
+            <p class="modal-unavailable">
+              <T v={site.ui.unavailable} />
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: 94dvh;
+    margin: auto 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .modal[open] {
+    animation: sheet-up 0.45s var(--ease-out);
+  }
+  .modal::backdrop {
+    background: rgba(28, 18, 12, 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .modal[open]::backdrop {
+    animation: fade-in 0.3s ease-out;
+  }
+  .modal-inner {
+    position: relative;
+    display: grid;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .modal-close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+  }
+  .modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  .modal-media {
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    background: var(--bg-alt);
+  }
+  .modal-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .modal-body {
+    padding: 1.4rem var(--gutter) 1.75rem;
+  }
+  .modal-chip {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .modal-title {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    margin-top: 0.3rem;
+  }
+  .modal-price {
+    margin-top: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--brand);
+  }
+  .modal-desc {
+    margin-top: 0.9rem;
+    color: var(--text-soft);
+  }
+  .modal-actions {
+    margin-top: 1.5rem;
+  }
+  .modal-actions .btn {
+    width: 100%;
+  }
+  .modal-unavailable {
+    display: inline-flex;
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    background: var(--bg-alt);
+    color: var(--text);
+    font-weight: 800;
+  }
+
+  @media (min-width: 800px) {
+    .modal {
+      width: min(900px, calc(100% - 3rem));
+      margin: auto;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .modal[open] {
+      animation-name: pop-in;
+    }
+    .modal-inner {
+      grid-template-columns: 1fr 1fr;
+      max-height: 86dvh;
+    }
+    .modal-media {
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+    .modal-body {
+      align-self: center;
+      padding: 2.5rem 2.25rem;
+      overflow: auto;
+    }
+    .modal-actions .btn {
+      width: auto;
+    }
+  }
+
+  @keyframes sheet-up {
+    from {
+      transform: translateY(40%);
+      opacity: 0;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      transform: translateY(20px) scale(0.97);
+      opacity: 0;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>
