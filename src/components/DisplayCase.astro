@@ -1,0 +1,253 @@
+---
+// Horizontal gallery: pinned + scroll-driven on desktop (motion.ts), native swipe carousel elsewhere.
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { i18nAttrs } from '../lib/i18n';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+
+const { gallery, ui } = site;
+---
+
+<section class="gallery" id="gallery" aria-labelledby="gallery-title" data-gallery>
+  <div class="gallery-pin" data-gallery-pin>
+    <div class="container gallery-head">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><T v={gallery.eyebrow} /></p>
+        <h2 class="section-title" id="gallery-title"><T v={gallery.title} /></h2>
+        <p class="section-intro"><T v={gallery.intro} /></p>
+      </div>
+      <Doodle name="swirl" class="d-swirl" />
+    </div>
+
+    <div
+      class="gallery-viewport"
+      data-gallery-viewport
+      tabindex="0"
+      role="region"
+      {...i18nAttrs({ 'aria-label': gallery.title })}
+    >
+      <ul class="gallery-track" data-gallery-track role="list">
+        {
+          gallery.items.map((item, i) => (
+            <li class="slide" data-slide>
+              <figure>
+                <div class="slide-photo">
+                  <Picture
+                    src={resolveImage(item.image)}
+                    formats={['avif', 'webp']}
+                    widths={[300, 460, 640]}
+                    sizes="(min-width: 900px) 42vh, 76vw"
+                    loading="lazy"
+                    {...i18nAttrs({ alt: item.caption })}
+                  />
+                </div>
+                <figcaption>
+                  <span class="slide-num">{String(i + 1).padStart(2, '0')}</span>
+                  <T v={item.caption} />
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="gallery-dots" data-gallery-dots>
+      <p class="swipe-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12h12M15 8l4 4-4 4M5 8l-2 4 2 4"></path></svg>
+        <T v={ui.swipeHint} />
+      </p>
+      <div class="dots">
+        {
+          gallery.items.map((_, i) => (
+            <button type="button" class="dot" data-dot={i} aria-current={i === 0 ? 'true' : undefined}>
+              <span class="sr-only">
+                <T v={ui.slide} /> {i + 1}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    position: relative;
+    padding-block: clamp(4.5rem, 11vw, 7rem);
+    background: linear-gradient(to bottom, transparent, var(--bg-alt) 18%, var(--bg-alt) 82%, transparent);
+    overflow-x: clip;
+  }
+  .gallery-head {
+    position: relative;
+  }
+  .gallery-head .section-head {
+    margin-bottom: 2rem;
+  }
+  .d-swirl {
+    width: 76px;
+    right: 0.5rem;
+    top: -2.5rem;
+    color: var(--wood);
+    opacity: 0.6;
+  }
+
+  .gallery-viewport {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-block: 1rem 1.5rem;
+  }
+  .gallery-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .gallery-viewport:focus-visible {
+    outline-offset: -3px;
+  }
+  .gallery-track {
+    display: flex;
+    gap: 1.1rem;
+    width: max-content;
+    margin: 0;
+    padding: 0 var(--gutter);
+    list-style: none;
+  }
+  .slide {
+    flex: 0 0 auto;
+    width: min(76vw, 340px);
+    scroll-snap-align: center;
+  }
+  .slide:nth-child(odd) figure {
+    transform: rotate(-1.4deg);
+  }
+  .slide:nth-child(even) figure {
+    transform: rotate(1.2deg) translateY(10px);
+  }
+  figure {
+    margin: 0;
+    padding: 0.65rem 0.65rem 0.9rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+  }
+  .slide-photo {
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-alt);
+  }
+  .slide-photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  figcaption {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.7rem 0.3rem 0;
+    font-family: var(--font-script);
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: var(--heading);
+  }
+  .slide-num {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--brand);
+  }
+
+  .gallery-dots {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline: var(--gutter);
+    max-width: var(--max);
+    margin-inline: auto;
+  }
+  .swipe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+  .swipe-hint svg {
+    width: 18px;
+    height: 18px;
+  }
+  .dots {
+    display: flex;
+    gap: 0.1rem;
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--wood);
+    opacity: 0.4;
+    transition:
+      width 0.3s var(--ease-out),
+      opacity 0.3s;
+  }
+  .dot[aria-current='true']::before {
+    width: 22px;
+    opacity: 1;
+  }
+
+  @media (min-width: 900px) {
+    .d-swirl {
+      width: 120px;
+      right: var(--gutter);
+      top: 0;
+    }
+  }
+
+  /* Desktop with motion: the section pins and the track is moved by GSAP. */
+  .gallery.is-pinned {
+    padding-block: 0;
+  }
+  .is-pinned .gallery-pin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding-block: calc(var(--header-h) + 1rem) 2rem;
+  }
+  .is-pinned .gallery-viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .is-pinned .gallery-track {
+    gap: 2.25rem;
+    padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    will-change: transform;
+  }
+  .is-pinned .slide {
+    width: calc(min(52vh, 520px) * 0.8);
+  }
+  .is-pinned .gallery-dots {
+    display: none;
+  }
+</style>

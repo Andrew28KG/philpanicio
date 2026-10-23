@@ -3,9 +3,11 @@
 import { initPrefs } from './prefs';
 import { initModals } from './modal';
 import { initTilt } from './tilt';
+import { initGallery } from './gallery';
 
 initPrefs();
 initModals();
+initGallery();
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
