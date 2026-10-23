@@ -163,7 +163,8 @@
       "en": "Baked with love in our home kitchen."
     },
     "contact": { "id": "Kontak", "en": "Contact" },
-    "follow": { "id": "Ikuti kami", "en": "Follow us" }
+    "follow": { "id": "Ikuti kami", "en": "Follow us" },
+    "toTop": { "id": "Kembali ke atas", "en": "Back to top" }
   },
   "messages": {
     "greeting": {

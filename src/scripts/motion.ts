@@ -118,10 +118,24 @@ function initGalleryPin() {
   };
 }
 
+// Our Story: the photo rises out of its arch like dough, then the text follows line by line.
+function initStory() {
+  const story = document.querySelector<HTMLElement>('[data-story]');
+  if (!story) return;
+  const tl = gsap.timeline({ scrollTrigger: { trigger: story, start: 'top 70%' } });
+  tl.fromTo(
+    story.querySelector('[data-story-photo]'),
+    { clipPath: 'inset(100% 0% 0% 0% round 999px 999px 22px 22px)', scale: 1.06 },
+    { clipPath: 'inset(0% 0% 0% 0% round 999px 999px 22px 22px)', scale: 1, duration: 1.4, ease: 'power3.out', clearProps: 'clipPath' },
+  )
+    .from(story.querySelectorAll('.story-tag, .story-visual .doodle'), { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.1 }, 0.8)
+    .from(story.querySelectorAll('[data-story-text] > *'), { y: 30, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12 }, 0.2);
+}
+
 export function initMotion() {
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const cleanups = [initSmoothScroll(), initHero(), initReveals()];
+    const cleanups = [initSmoothScroll(), initHero(), initReveals(), initStory()];
     return () => cleanups.forEach((fn) => fn?.());
   });
   mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => initGalleryPin());

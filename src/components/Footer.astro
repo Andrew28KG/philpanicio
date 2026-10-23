@@ -1,0 +1,123 @@
+---
+import site from '../data/site.json';
+import { i18nAttrs } from '../lib/i18n';
+import { formatPhone, greetingMessage, waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+
+const waHref = { id: waLink(greetingMessage('id')), en: waLink(greetingMessage('en')) };
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Doodle name="wheat" class="d-wheat" />
+      <p class="footer-name">{site.name}</p>
+      <p class="footer-line"><T v={site.footer.line} /></p>
+    </div>
+
+    <div>
+      <h2 class="footer-head"><T v={site.footer.contact} /></h2>
+      <ul class="footer-list" role="list">
+        <li>
+          <a target="_blank" rel="noopener" {...i18nAttrs({ href: waHref })}>WhatsApp · {formatPhone()}</a>
+        </li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="footer-head"><T v={site.footer.follow} /></h2>
+      <ul class="footer-list" role="list">
+        <li>
+          <a href={site.social.tiktok.url} target="_blank" rel="noopener">TikTok · {site.social.tiktok.handle}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-base">
+    <p>© {year} {site.name}</p>
+    <a href="#top" class="to-top">↑ <T v={site.footer.toTop} /></a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    padding-block: 3.5rem calc(6.5rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px dashed var(--line);
+    background: var(--bg-alt);
+  }
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .footer-brand {
+    position: relative;
+  }
+  .d-wheat {
+    position: static;
+    width: 44px;
+    margin-bottom: 0.4rem;
+  }
+  .footer-name {
+    font-family: var(--font-script);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--heading);
+  }
+  .footer-line {
+    margin-top: 0.5rem;
+    color: var(--text-soft);
+    max-width: 22rem;
+  }
+  .footer-head {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 0.6rem;
+  }
+  .footer-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .footer-list a {
+    display: inline-block;
+    padding-block: 0.3rem;
+    text-decoration: none;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .footer-list a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--accent);
+  }
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--text-soft);
+  }
+  .to-top {
+    text-decoration: none;
+    font-weight: 700;
+  }
+  @media (min-width: 760px) {
+    .footer-grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+</style>

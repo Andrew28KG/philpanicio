@@ -1,0 +1,107 @@
+---
+import site from '../data/site.json';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+
+const { testimonials } = site;
+---
+
+<section class="section words" aria-labelledby="words-title">
+  <div class="container">
+    <div class="section-head center" data-reveal>
+      <p class="eyebrow"><T v={testimonials.eyebrow} /></p>
+      <h2 class="section-title" id="words-title"><T v={testimonials.title} /></h2>
+    </div>
+
+    <ul class="words-grid" role="list">
+      {
+        testimonials.items.map((item) => (
+          <li data-reveal-item>
+            <figure class="note">
+              <Doodle name="quote" class="d-quote" />
+              <blockquote>
+                <p>
+                  <T v={item.text} />
+                </p>
+              </blockquote>
+              <figcaption>
+                <span class="who">{item.name}</span>
+                <span class="where">
+                  <T v={item.note} />
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .words {
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg-alt) 70%, transparent), transparent);
+  }
+  .words-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .note {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 2.4rem 1.5rem 1.4rem;
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--shadow);
+  }
+  li:nth-child(odd) .note {
+    transform: rotate(-0.8deg);
+  }
+  li:nth-child(even) .note {
+    transform: rotate(0.9deg);
+  }
+  .d-quote {
+    top: -0.9rem;
+    left: 1.2rem;
+    width: 52px;
+    color: var(--accent);
+    opacity: 1;
+  }
+  blockquote {
+    margin: 0;
+  }
+  blockquote p {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 3.4vw, 1.25rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--heading);
+  }
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+  .who {
+    font-family: var(--font-script);
+    font-size: 1.45rem;
+    line-height: 1.1;
+    color: var(--brand);
+  }
+  .where {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+  }
+  @media (min-width: 700px) {
+    .words-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.75rem;
+    }
+  }
+</style>

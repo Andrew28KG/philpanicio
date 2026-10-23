@@ -1,0 +1,87 @@
+---
+import site from '../data/site.json';
+import { i18nAttrs } from '../lib/i18n';
+import { greetingMessage, waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import WaIcon from './WaIcon.astro';
+
+const waHref = { id: waLink(greetingMessage('id')), en: waLink(greetingMessage('en')) };
+---
+
+<a class="fab" target="_blank" rel="noopener" {...i18nAttrs({ href: waHref })}>
+  <WaIcon />
+  <span class="fab-label"><T v={site.ui.floatingWa} /></span>
+</a>
+
+<style>
+  .fab {
+    position: fixed;
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    height: 60px;
+    min-width: 60px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--bg) 70%, transparent),
+      var(--shadow-lg);
+    transition: transform 0.25s var(--ease-out);
+  }
+  .fab::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: pulse 2.8s ease-out infinite 2s;
+    pointer-events: none;
+  }
+  .fab:hover {
+    transform: translateY(-3px) scale(1.03);
+  }
+  .fab :global(svg) {
+    width: 26px;
+    height: 26px;
+    flex: none;
+  }
+  /* Icon-only on phones; the label stays available to screen readers. */
+  .fab-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  @media (min-width: 900px) {
+    .fab {
+      right: 1.5rem;
+      bottom: 1.5rem;
+      padding: 0 22px 0 18px;
+    }
+    .fab-label {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+    }
+  }
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+    70%,
+    100% {
+      box-shadow: 0 0 0 16px transparent;
+    }
+  }
+</style>

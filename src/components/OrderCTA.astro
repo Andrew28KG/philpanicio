@@ -1,0 +1,141 @@
+---
+import site from '../data/site.json';
+import { i18nAttrs } from '../lib/i18n';
+import { formatPhone, greetingMessage, waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+import WaIcon from './WaIcon.astro';
+
+const { order } = site;
+const waHref = { id: waLink(greetingMessage('id')), en: waLink(greetingMessage('en')) };
+const mailHref = {
+  id: `mailto:${site.email}?subject=${encodeURIComponent(order.emailSubject.id)}`,
+  en: `mailto:${site.email}?subject=${encodeURIComponent(order.emailSubject.en)}`,
+};
+---
+
+<section class="section order" id="order" aria-labelledby="order-title">
+  <div class="container">
+    <div class="order-card" data-reveal>
+      <Doodle name="whisk" class="d-whisk" />
+      <Doodle name="wheat" class="d-wheat" />
+      <Doodle name="sprinkles" class="d-sprinkles" />
+
+      <p class="eyebrow"><T v={order.eyebrow} /></p>
+      <h2 class="order-title" id="order-title"><T v={order.title} /></h2>
+      <p class="order-body"><T v={order.body} /></p>
+
+      <div class="order-actions">
+        <a class="btn btn-lg" target="_blank" rel="noopener" {...i18nAttrs({ href: waHref })}>
+          <WaIcon />
+          <T v={order.whatsapp} />
+        </a>
+        <a class="btn btn-outline" {...i18nAttrs({ href: mailHref })}>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M4 7l8 6 8-6"></path></svg>
+          <T v={order.email} />
+        </a>
+      </div>
+
+      <ul class="order-contact" role="list">
+        <li>{formatPhone()}</li>
+        <li>{site.email}</li>
+      </ul>
+      <p class="order-note"><T v={order.note} /></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .order-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 8vw, 4.5rem) clamp(1.4rem, 6vw, 4.5rem);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(80% 90% at 100% 0%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 60%),
+      var(--invert-bg);
+    color: var(--invert-text);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .order-card .eyebrow {
+    color: var(--invert-accent);
+  }
+  .order-title {
+    color: inherit;
+    font-size: clamp(2.3rem, 8vw, 4rem);
+    max-width: 14ch;
+    margin-inline: auto;
+  }
+  .order-body {
+    max-width: 36rem;
+    margin: 1.1rem auto 0;
+    opacity: 0.9;
+    font-size: 1.08rem;
+  }
+  .order-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+  .btn-lg {
+    min-height: 60px;
+    font-size: 1.1rem;
+  }
+  .btn-outline {
+    --btn-bg: transparent;
+    --btn-fg: var(--invert-text);
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--invert-text) 40%, transparent);
+  }
+  .btn-outline:hover {
+    background: color-mix(in srgb, var(--invert-text) 12%, transparent);
+    box-shadow: inset 0 0 0 2px var(--invert-text);
+  }
+  .order-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1.25rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+  }
+  .order-note {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    opacity: 0.75;
+  }
+  .doodle {
+    color: var(--invert-accent);
+    opacity: 0.35;
+  }
+  .d-whisk {
+    width: 90px;
+    left: -18px;
+    bottom: -10px;
+    transform: rotate(24deg);
+  }
+  .d-wheat {
+    width: 80px;
+    right: -14px;
+    top: 10px;
+    transform: rotate(-20deg);
+  }
+  .d-sprinkles {
+    width: 70px;
+    left: 12%;
+    top: 14px;
+    color: var(--berry);
+    opacity: 0.5;
+  }
+  @media (min-width: 600px) {
+    .order-actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+</style>
