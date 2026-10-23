@@ -1,0 +1,224 @@
+---
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { i18nAttrs, LANGS } from '../lib/i18n';
+import { greetingMessage, waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+import WaIcon from './WaIcon.astro';
+
+const { hero } = site;
+const waHref = { id: waLink(greetingMessage('id')), en: waLink(greetingMessage('en')) };
+
+// Split the headline into words and letters for the "rising dough" animation.
+const headline = LANGS.map((lang) => ({
+  lang,
+  text: hero.headline[lang],
+  words: hero.headline[lang].split(' ').map((word) => [...word]),
+}));
+---
+
+<section class="hero" aria-labelledby="hero-title" data-hero>
+  <canvas class="hero-dust" data-dust aria-hidden="true"></canvas>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow hero-fade"><T v={hero.eyebrow} /></p>
+      <h1 class="hero-title" id="hero-title">
+        {
+          headline.map(({ lang, text, words }) => (
+            <span class="i18n" lang={lang}>
+              <span class="sr-only">{text}</span>
+              <span aria-hidden="true">
+                {words.map((letters, i) => (
+                  <>
+                    <span class:list={['word', { 'word-accent': i === words.length - 1 }]}>
+                      {letters.map((ch) => (
+                        <span class="ch">{ch}</span>
+                      ))}
+                    </span>{' '}
+                  </>
+                ))}
+              </span>
+            </span>
+          ))
+        }
+      </h1>
+      <p class="hero-sub hero-fade"><T v={hero.subtext} /></p>
+      <div class="hero-actions hero-fade">
+        <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: waHref })}>
+          <WaIcon />
+          <T v={hero.cta} />
+        </a>
+        <a class="btn btn-ghost" href="#bakes"><T v={hero.secondary} /></a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-arch arch">
+        <Picture
+          class="hero-img"
+          src={resolveImage(hero.image)}
+          formats={['avif', 'webp']}
+          widths={[420, 640, 860, 1200]}
+          sizes="(min-width: 900px) 42vw, 86vw"
+          loading="eager"
+          fetchpriority="high"
+          data-parallax
+          {...i18nAttrs({ alt: hero.imageAlt })}
+        />
+      </div>
+      <div class="hero-stamp" aria-hidden="true">
+        <span class="i18n" lang="id">dibuat<br />dengan<br />tangan</span>
+        <span class="i18n" lang="en">made<br />by<br />hand</span>
+      </div>
+      <Doodle name="wheat" class="d-wheat" />
+      <Doodle name="sprinkles" class="d-sprinkles" />
+      <Doodle name="whisk" class="d-whisk" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(1.5rem, 5vw, 3rem) clamp(3.5rem, 8vw, 6rem);
+    background:
+      radial-gradient(120% 70% at 85% 30%, var(--bg-alt) 0%, transparent 60%),
+      radial-gradient(90% 60% at 0% 100%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+    overflow: clip;
+  }
+  .hero-dust {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    gap: clamp(2.25rem, 6vw, 3.5rem);
+    align-items: center;
+  }
+  .hero-title {
+    font-size: clamp(2.85rem, 12.4vw, 5.6rem);
+    line-height: 1.02;
+    margin-block: 0.2rem 1.1rem;
+    font-weight: 600;
+  }
+  .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .ch {
+    display: inline-block;
+    will-change: transform;
+  }
+  .word-accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--brand);
+  }
+  .hero-sub {
+    max-width: 34rem;
+    font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+    color: var(--text-soft);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+  .hero-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .hero-visual {
+    position: relative;
+    width: min(86%, 400px);
+    margin-inline: auto;
+  }
+  .hero-arch {
+    aspect-ratio: 4 / 5;
+    border: 6px solid var(--surface-strong);
+    transform: rotate(1.5deg);
+  }
+  .hero-arch :global(img) {
+    width: 100%;
+    height: 112%;
+    object-fit: cover;
+    margin-top: -6%;
+  }
+  .hero-stamp {
+    position: absolute;
+    left: -6%;
+    bottom: 8%;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-script);
+    font-size: 1.05rem;
+    line-height: 0.95;
+    text-align: center;
+    transform: rotate(-12deg);
+    box-shadow: var(--shadow);
+    outline: 2px dashed color-mix(in srgb, var(--accent-ink) 35%, transparent);
+    outline-offset: -8px;
+  }
+  .d-wheat {
+    width: 64px;
+    top: -6%;
+    right: -10%;
+    transform: rotate(18deg);
+  }
+  .d-sprinkles {
+    width: 74px;
+    right: -12%;
+    bottom: 12%;
+    color: var(--berry);
+    opacity: 0.75;
+  }
+  .d-whisk {
+    width: 58px;
+    top: 14%;
+    left: -14%;
+    transform: rotate(-22deg);
+  }
+
+  @media (min-width: 600px) {
+    .hero-actions .btn {
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      min-height: calc(100svh - var(--header-h));
+      display: grid;
+      align-items: center;
+    }
+    .hero-grid {
+      grid-template-columns: 1.08fr 0.92fr;
+    }
+    .hero-title {
+      font-size: clamp(3.6rem, 6.4vw, 5.9rem);
+    }
+    .hero-visual {
+      width: min(100%, 460px);
+    }
+    .hero-stamp {
+      width: 112px;
+      height: 112px;
+      font-size: 1.3rem;
+    }
+  }
+</style>

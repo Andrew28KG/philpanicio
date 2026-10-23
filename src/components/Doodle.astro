@@ -4,9 +4,11 @@ interface Props {
   name: 'wheat' | 'whisk' | 'sprinkles' | 'rolling-pin' | 'heart' | 'swirl' | 'quote';
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
 
-const { name, class: className = '', style } = Astro.props;
+// `rest` carries the parent's scoped-style attribute, so parents can position doodles.
+const { name, class: className = '', style, ...rest } = Astro.props;
 ---
 
 <svg
@@ -20,6 +22,7 @@ const { name, class: className = '', style } = Astro.props;
   stroke-linejoin="round"
   aria-hidden="true"
   focusable="false"
+  {...rest}
 >
   {
     name === 'wheat' && (
