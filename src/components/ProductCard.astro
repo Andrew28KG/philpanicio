@@ -44,7 +44,16 @@ const category = categories[product.category] ?? product.category;
   </span>
   <span class="card-body">
     <span class="card-name"><T v={product.name} /></span>
-    <span class="card-price">{formatPrice(product.price)}</span>
+    <span class="card-price">
+      {formatPrice(product.price)}{' '}
+      {
+        product.unit && (
+          <span class="card-unit">
+            <T v={product.unit} />
+          </span>
+        )
+      }
+    </span>
   </span>
   <span class="card-cta" aria-hidden="true">
     <T v={site.ui.viewDetails} />
@@ -152,6 +161,11 @@ const category = categories[product.category] ?? product.category;
     font-weight: 800;
     color: var(--brand);
     font-size: 0.95rem;
+  }
+  .card-unit {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-soft);
   }
   .card-cta {
     display: inline-flex;

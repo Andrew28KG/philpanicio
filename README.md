@@ -54,7 +54,10 @@ Each product is one `{ ... }` block in the list:
 | `name`        | `{ "id": "...", "en": "..." }`, or a single string if it's the same in both languages                        |
 | `description` | Same format as `name`                                                                                        |
 | `price`       | Whole rupiah, digits only, with no dots or "Rp" (`75000`)                                                    |
-| `category`    | `cake` or `bread`. To add a new category, also add its label in `site.json` → `ui.categories`              |
+| `unit`        | Optional. Text shown after the price, e.g. `{ "id": "/ satuan", "en": "/ piece" }`                           |
+| `specs`       | Optional list of detail rows in the product popup: `[{ "label": "Ukuran", "value": "14 cm" }, …]`. Both `label` and `value` can be a string or `{ "id", "en" }` |
+| `designs`     | Optional list of extra photos shown as "Design options" in the popup: `[{ "image": "products/menu/x.jpg", "label": "Cherry" }]` |
+| `category`    | `cake`, `bread` or `muffin`. To add a new category, also add its label in `site.json` → `ui.categories`    |
 | `image`       | Path of the photo **inside `src/assets/`**, e.g. `products/breads/banana-bread.jpg`                          |
 | `featured`    | `true` shows it in the "Signature Bakes" section                                                             |
 | `available`   | `false` shows a "Currently unavailable" label instead of the order button                                    |
@@ -106,9 +109,11 @@ src/assets/
 
 **To replace a placeholder:**
 
-1. Drop your photo into the right folder, e.g. `src/assets/products/cakes/chocolate-orange-cake.jpg`.
-2. Update the path in the JSON (`"image": "products/cakes/chocolate-orange-cake.jpg"`).
-3. Delete the old `placeholder-*.jpg` file.
+1. Drop your photo into the right folder, e.g. `src/assets/products/menu/london-cake.jpg`.
+2. Update the path in the JSON (`"image": "products/menu/london-cake.jpg"`).
+3. Delete the old photo if it is no longer used.
+
+Product, hero and gallery photos are the real Pro photos in `src/assets/products/menu/`. Only the baker photo in `story/` is still a placeholder.
 
 Tips:
 

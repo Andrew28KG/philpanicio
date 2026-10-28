@@ -63,21 +63,8 @@ function scene(w, h, bgA, bgB, art, title, file) {
   </svg>`);
 }
 
-const shots = [
-  ['products/cakes/placeholder-chocolate-orange-cake.jpg', 'Chocolate Orange Cake', cake('#4A2A1F', '#5B2A1E', palette.cream), palette.cream, palette.toast],
-  ['products/cakes/placeholder-strawberry-shortcake.jpg', 'Strawberry Shortcake', cake('#FFF6EA', '#F3D9B1', '#E77A82'), '#FBEFE6', '#E6B7A8'],
-  ['products/cakes/placeholder-pandan-chiffon.jpg', 'Pandan Chiffon', cake('#B9D296', palette.pandan, '#E9F0D8'), '#F1F2DE', '#B9C98F'],
-  ['products/breads/placeholder-sourdough-loaf.jpg', 'Sourdough Loaf', loaf(palette.crust), palette.oat, palette.toast],
-  ['products/breads/placeholder-cinnamon-rolls.jpg', 'Cinnamon Rolls', rolls(), palette.cream, palette.honey],
-  ['products/breads/placeholder-milk-bread.jpg', 'Milk Bread', loaf('#D9A066'), '#FFF7EA', palette.oat],
-  ['hero/placeholder-hero-cake.jpg', 'Signature Cake', cake('#4A2A1F', '#5B2A1E', palette.cream), palette.cream, palette.toast, 1400, 1750],
-  ['gallery/placeholder-gallery-01.jpg', 'Birthday Cake', cake('#FFF6EA', '#F3D9B1', '#E77A82'), '#FBEFE6', '#E6B7A8'],
-  ['gallery/placeholder-gallery-02.jpg', 'Fresh Loaves', loaf(palette.crust), palette.oat, palette.toast],
-  ['gallery/placeholder-gallery-03.jpg', 'Chocolate Layers', cake('#4A2A1F', '#5B2A1E', palette.cream), palette.cream, palette.toast],
-  ['gallery/placeholder-gallery-04.jpg', 'Morning Rolls', rolls(), palette.cream, palette.honey],
-  ['gallery/placeholder-gallery-05.jpg', 'Pandan Chiffon', cake('#B9D296', palette.pandan, '#E9F0D8'), '#F1F2DE', '#B9C98F'],
-  ['gallery/placeholder-gallery-06.jpg', 'Soft Milk Bread', loaf('#D9A066'), '#FFF7EA', palette.oat],
-];
+// Product, hero and gallery photos are real now (see src/assets/products/menu). Only the story photo below still uses a placeholder.
+const shots = [];
 
 function ensureDir(file) {
   mkdirSync(dirname(file), { recursive: true });

@@ -45,8 +45,53 @@ const alt = { id: t(product.name, 'id'), en: t(product.name, 'en') };
     <div class="modal-body">
       <p class="modal-chip"><T v={category} /></p>
       <h3 class="modal-title" id={`${id}-title`}><T v={product.name} /></h3>
-      <p class="modal-price">{formatPrice(product.price)}</p>
+      <p class="modal-price">
+        {formatPrice(product.price)}{' '}
+        {
+          product.unit && (
+            <span class="modal-unit">
+              <T v={product.unit} />
+            </span>
+          )
+        }
+      </p>
       <p class="modal-desc"><T v={product.description} /></p>
+
+      {
+        product.specs.length > 0 && (
+          <dl class="modal-specs">
+            {product.specs.map((spec) => (
+              <div>
+                <dt><T v={spec.label} /></dt>
+                <dd><T v={spec.value} /></dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+
+      {
+        product.designs.length > 0 && (
+          <div class="modal-designs">
+            <p class="designs-title"><T v={site.ui.designs} /></p>
+            <ul class="designs-list" role="list">
+              {product.designs.map((design) => (
+                <li>
+                  <Picture
+                    src={resolveImage(design.image)}
+                    formats={['avif', 'webp']}
+                    widths={[120, 200, 300]}
+                    sizes="88px"
+                    loading="lazy"
+                    {...i18nAttrs({ alt: design.label })}
+                  />
+                  <span><T v={design.label} /></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
 
       <div class="modal-actions" data-product-actions={product.id}>
         {
@@ -146,8 +191,75 @@ const alt = { id: t(product.name, 'id'), en: t(product.name, 'en') };
     font-weight: 600;
     color: var(--brand);
   }
+  .modal-unit {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-soft);
+  }
   .modal-desc {
     margin-top: 0.9rem;
+    color: var(--text-soft);
+  }
+  .modal-specs {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1.1rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .modal-specs div {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .modal-specs dt {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .modal-specs dd {
+    margin: 0;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .modal-designs {
+    margin-top: 1.25rem;
+  }
+  .designs-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .designs-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .designs-list li {
+    display: grid;
+    gap: 0.3rem;
+    text-align: center;
+  }
+  .designs-list :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 12px;
+    background: var(--bg-alt);
+  }
+  .designs-list span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.2;
     color: var(--text-soft);
   }
   .modal-actions {

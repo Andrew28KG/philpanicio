@@ -41,9 +41,11 @@
     "floatingWa": { "id": "Chat kami di WhatsApp", "en": "Chat with us on WhatsApp" },
     "swipeHint": { "id": "Geser untuk melihat", "en": "Swipe to look around" },
     "slide": { "id": "Foto", "en": "Photo" },
+    "designs": { "id": "Pilihan desain", "en": "Design options" },
     "categories": {
       "cake": { "id": "Kue", "en": "Cake" },
-      "bread": { "id": "Roti", "en": "Bread" }
+      "bread": { "id": "Roti", "en": "Bread" },
+      "muffin": { "id": "Muffin", "en": "Muffin" }
     }
   },
   "hero": {
@@ -55,10 +57,10 @@
     },
     "cta": { "id": "Pesan via WhatsApp", "en": "Order on WhatsApp" },
     "secondary": { "id": "Lihat kue andalan", "en": "See signature bakes" },
-    "image": "hero/placeholder-hero-cake.jpg",
+    "image": "products/menu/mini-cake-cherry.jpg",
     "imageAlt": {
-      "id": "Kue cokelat berlapis dengan krim dan irisan jeruk di atasnya",
-      "en": "Layered chocolate cake with cream and orange slices on top"
+      "id": "Mini cake bergaya vintage dengan piping merah dan krem serta hiasan ceri",
+      "en": "Vintage-style mini cake with red and cream piping and little cherries"
     }
   },
   "bakes": {
@@ -77,12 +79,14 @@
       "en": "A peek at what's been coming out of the oven lately."
     },
     "items": [
-      { "image": "gallery/placeholder-gallery-01.jpg", "caption": { "id": "Kue ulang tahun stroberi", "en": "Strawberry birthday cake" } },
-      { "image": "gallery/placeholder-gallery-02.jpg", "caption": { "id": "Roti sourdough segar", "en": "Fresh sourdough loaves" } },
-      { "image": "gallery/placeholder-gallery-03.jpg", "caption": { "id": "Lapisan cokelat jeruk", "en": "Chocolate orange layers" } },
-      { "image": "gallery/placeholder-gallery-04.jpg", "caption": { "id": "Cinnamon roll pagi hari", "en": "Morning cinnamon rolls" } },
-      { "image": "gallery/placeholder-gallery-05.jpg", "caption": { "id": "Chiffon pandan", "en": "Pandan chiffon" } },
-      { "image": "gallery/placeholder-gallery-06.jpg", "caption": { "id": "Roti susu yang empuk", "en": "Pillowy milk bread" } }
+      { "image": "products/menu/banana-bread-chocolate-chip.jpg", "caption": "Banana Bread Chocolate Chip" },
+      { "image": "products/menu/mini-cake.jpg", "caption": { "id": "Mini cake bunga merah muda", "en": "Pink flower mini cake" } },
+      { "image": "products/menu/london-cake.jpg", "caption": "London Cake" },
+      { "image": "products/menu/mini-cake-emerald.jpg", "caption": { "id": "Mini cake hijau emerald", "en": "Emerald mini cake" } },
+      { "image": "products/menu/chocolate-muffin.jpg", "caption": "Chocolate Muffin" },
+      { "image": "products/menu/mini-cake-vanilla-bowtie.jpg", "caption": { "id": "Mini cake vanilla pita biru", "en": "Vanilla bowtie mini cake" } },
+      { "image": "products/menu/rectangle-banana-bread.jpg", "caption": "Rectangle Banana Bread" },
+      { "image": "products/menu/mini-cake-cherry.jpg", "caption": { "id": "Mini cake ceri", "en": "Cherry mini cake" } }
     ]
   },
   "story": {

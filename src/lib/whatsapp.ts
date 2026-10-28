@@ -10,10 +10,11 @@ export function greetingMessage(lang: Lang): string {
   return t(site.messages.greeting, lang);
 }
 
-export function productMessage(product: { name: Localized; price: number }, lang: Lang): string {
+export function productMessage(product: { name: Localized; price: number; unit?: Localized }, lang: Lang): string {
+  const price = formatPrice(product.price);
   return fill(t(site.messages.product, lang), {
     product: t(product.name, lang),
-    price: formatPrice(product.price),
+    price: product.unit ? `${price} ${t(product.unit, lang)}` : price,
   });
 }
 

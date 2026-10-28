@@ -13,6 +13,9 @@ const productSchema = z.object({
   name: localized,
   description: localized,
   price: z.number().int().nonnegative(),
+  unit: localized.optional(),
+  specs: z.array(z.object({ label: localized, value: localized })).default([]),
+  designs: z.array(z.object({ image: z.string().min(1), label: localized })).default([]),
   category: z.string().min(1),
   image: z.string().min(1),
   featured: z.boolean().default(false),
@@ -22,6 +25,9 @@ const productSchema = z.object({
 export type Product = z.infer<typeof productSchema> & {
   name: Localized;
   description: Localized;
+  unit?: Localized;
+  specs: { label: Localized; value: Localized }[];
+  designs: { image: string; label: Localized }[];
 };
 
 function load(): Product[] {
@@ -36,6 +42,7 @@ function load(): Product[] {
     }
     seen.add(product.id);
     resolveImage(product.image); // fail the build early if the photo is missing
+    for (const design of product.designs) resolveImage(design.image);
   }
   return parsed.data;
 }

@@ -37,13 +37,21 @@ const { bakes } = site;
   .bakes {
     overflow-x: clip;
   }
+  /* Flex (not grid) so an incomplete last row stays centred when the menu has an odd number of items. */
   .bakes-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(0.8rem, 3vw, 1.75rem);
+    --gap: clamp(0.8rem, 3vw, 1.75rem);
+    --cols: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+  .bakes-grid > li {
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    min-width: 0;
   }
   .d-pin {
     width: 76px;
@@ -60,7 +68,7 @@ const { bakes } = site;
   }
   @media (min-width: 1000px) {
     .bakes-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      --cols: 3;
     }
     .d-pin {
       top: 2.5rem;
