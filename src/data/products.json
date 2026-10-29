@@ -1,7 +1,7 @@
 [
   {
     "id": "banana-bread-chocolate-chip",
-    "name": "Banana Bread Chocolate Chip",
+    "name": "Chocolate Chip Banana Bread",
     "description": {
       "id": "Banana bread yang lembut dan wangi, dengan topping coklat chip.",
       "en": "Soft, fragrant banana bread finished with a chocolate chip topping."
@@ -20,11 +20,14 @@
     "id": "rectangle-banana-bread",
     "name": "Rectangle Banana Bread",
     "description": {
-      "id": "Banana bread kotak yang dipotong rapi, dihias irisan pisang di tiap potongnya. Pas untuk dibagi ramai-ramai.",
-      "en": "A tray of banana bread cut into neat squares, each topped with a slice of banana. Made for sharing."
+      "id": "Banana bread kotak yang dipotong rapi jadi 64 potong, dihias irisan pisang. Pas untuk dibagi ramai-ramai.",
+      "en": "A tray of banana bread cut into 64 neat pieces, topped with banana slices. Made for sharing."
     },
-    "price": 325000,
-    "specs": [{ "label": { "id": "Ukuran", "en": "Size" }, "value": "22 × 22 cm" }],
+    "price": 350000,
+    "specs": [
+      { "label": { "id": "Ukuran", "en": "Size" }, "value": "24 × 24 cm" },
+      { "label": { "id": "Isi", "en": "Pieces" }, "value": "64 pcs" }
+    ],
     "category": "bread",
     "image": "products/menu/rectangle-banana-bread.jpg",
     "featured": true,
@@ -49,12 +52,13 @@
     "id": "london-cake",
     "name": "London Cake",
     "description": {
-      "id": "Kue 3 layer dengan hiasan piping buttercream coklat bergaya vintage.",
-      "en": "A 3-layer cake finished with vintage-style chocolate buttercream piping."
+      "id": "Tiga layer fudgy chocolate cake dengan dua lapis isian salted caramel atau chocolate ganache, dihias piping buttercream coklat bergaya vintage.",
+      "en": "Three layers of fudgy chocolate cake with two layers of salted caramel or chocolate ganache filling, finished with vintage-style chocolate buttercream piping."
     },
     "price": 400000,
     "specs": [
-      { "label": { "id": "Layer", "en": "Layers" }, "value": "3" },
+      { "label": { "id": "Layer", "en": "Layers" }, "value": { "id": "3 layer fudgy chocolate cake", "en": "3 layers of fudgy chocolate cake" } },
+      { "label": { "id": "Isian", "en": "Filling" }, "value": { "id": "2 lapis: Salted Caramel atau Chocolate Ganache", "en": "2 layers: Salted Caramel or Chocolate Ganache" } },
       { "label": { "id": "Ukuran", "en": "Size" }, "value": "11 × 22 cm" }
     ],
     "category": "cake",
@@ -72,19 +76,13 @@
     "price": 180000,
     "specs": [
       { "label": { "id": "Ukuran", "en": "Size" }, "value": "14 cm" },
-      { "label": { "id": "Layer", "en": "Layers" }, "value": "3" },
+      { "label": { "id": "Layer", "en": "Layers" }, "value": { "id": "3 layer, tinggi total 9 cm (3 cm per layer)", "en": "3 layers, 9 cm tall in total (3 cm each)" } },
       { "label": { "id": "Rasa", "en": "Flavour" }, "value": { "id": "Vanilla, Coklat, atau Pandan", "en": "Vanilla, Chocolate or Pandan" } },
       { "label": { "id": "Selai", "en": "Jam" }, "value": { "id": "Strawberry, Keju, atau Coklat (pilih salah satu)", "en": "Strawberry, Cheese or Chocolate (choose one)" } },
-      { "label": { "id": "Dekorasi", "en": "Decoration" }, "value": { "id": "Standar, bisa pilih desain yang berbeda", "en": "Standard, with a choice of designs" } }
-    ],
-    "designs": [
-      { "image": "products/menu/mini-cake.jpg", "label": "Flower" },
-      { "image": "products/menu/mini-cake-cherry.jpg", "label": "Cherry" },
-      { "image": "products/menu/mini-cake-emerald.jpg", "label": "Emerald" },
-      { "image": "products/menu/mini-cake-vanilla-bowtie.jpg", "label": "Vanilla Bowtie" }
+      { "label": { "id": "Dekorasi", "en": "Decoration" }, "value": { "id": "Standar. Ada banyak pilihan desain, tanyakan lewat WhatsApp", "en": "Standard. Many more designs available, just ask on WhatsApp" } }
     ],
     "category": "cake",
-    "image": "products/menu/mini-cake-cherry.jpg",
+    "image": "products/menu/mini-cake.jpg",
     "featured": true,
     "available": true
   }

@@ -79,7 +79,7 @@
       "en": "A peek at what's been coming out of the oven lately."
     },
     "items": [
-      { "image": "products/menu/banana-bread-chocolate-chip.jpg", "caption": "Banana Bread Chocolate Chip" },
+      { "image": "products/menu/banana-bread-chocolate-chip.jpg", "caption": "Chocolate Chip Banana Bread" },
       { "image": "products/menu/mini-cake.jpg", "caption": { "id": "Mini cake bunga merah muda", "en": "Pink flower mini cake" } },
       { "image": "products/menu/london-cake.jpg", "caption": "London Cake" },
       { "image": "products/menu/mini-cake-emerald.jpg", "caption": { "id": "Mini cake hijau emerald", "en": "Emerald mini cake" } },
