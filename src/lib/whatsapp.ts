@@ -38,7 +38,7 @@ export function orderMessage(items: OrderItem[], lang: Lang): string {
   ].join('\n');
 }
 
-/** "6287774435888" → "+62 877-7443-5888" for display. */
+/** "62895378416262" → "+62 895-3784-16262" for display. */
 export function formatPhone(number: string = site.whatsapp): string {
   const local = number.replace(/^62/, '');
   return `+62 ${local.slice(0, 3)}-${local.slice(3, 7)}-${local.slice(7)}`;

@@ -84,7 +84,7 @@ Every sentence on the site lives here, in both languages. This includes the tagl
 
 Useful fields:
 
-- `whatsapp`: the number in international format **without `+`** (`6287774435888`). Every WhatsApp button uses it.
+- `whatsapp`: the number in international format **without `+`** (`62895378416262`). Every WhatsApp button uses it.
 - `email`, `social.tiktok`: contact links.
 - `testimonials.items`: add or remove `{ "name", "note", "text" }` blocks. **The current ones are placeholders. Replace them with real quotes, with permission.**
 - `messages.greeting` / `messages.product`: the pre-filled WhatsApp texts. `{product}` and `{price}` are filled in automatically.
@@ -122,7 +122,7 @@ Tips:
 - The hero image is set in `site.json` → `hero.image`, and the baker photo in `story.image`.
 - `npm run placeholders` regenerates any missing placeholder image. It never overwrites your photos.
 
-> ⚠️ The phone number printed on the original logo artwork (`+62 877-7443-588`) is missing a digit. The site uses the correct number `+62 877-7443-5888`, and that line is cropped out of the images the site generates. Ask the designer to fix the logo file.
+> ⚠️ The original logo artwork still prints an old phone number (`+62 877-7443-588`). The site uses `+62 895-3784-16262` from `site.json`, and the logo's phone line is cropped out of the images the site generates. Ask the designer to update the logo file.
 
 ---
 
