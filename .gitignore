@@ -26,3 +26,11 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 *.swp
+
+# private or heavy source material: kept on this computer only, never pushed
+# (customer chat screenshots, photos with customer names, original/unedited photos)
+src/assets/Testimoni/
+src/assets/Extra/
+src/assets/products/cakes/
+src/assets/products/Pro*
+social-media/prompt-foto-extra.md
