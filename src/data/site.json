@@ -58,10 +58,15 @@
     },
     "cta": { "id": "Pesan via WhatsApp", "en": "Order on WhatsApp" },
     "secondary": { "id": "Lihat kue andalan", "en": "See signature bakes" },
-    "image": "products/menu/mini-cake-cherry.jpg",
+    "image": "hero/hero-light.jpg",
     "imageAlt": {
-      "id": "Mini cake bergaya vintage dengan piping merah dan krem serta hiasan ceri",
-      "en": "Vintage-style mini cake with red and cream piping and little cherries"
+      "id": "Kue krim putih berhias mawar merah muda dan lilin, disinari cahaya matahari sore",
+      "en": "White cream cake topped with pink roses and candles in warm afternoon light"
+    },
+    "imageDark": "hero/hero-dark.jpg",
+    "imageDarkAlt": {
+      "id": "Kue fondant tema kopi dengan tulisan Happy Birthday cokelat dan biji kopi, di kafe yang temaram",
+      "en": "Coffee-themed fondant cake with chocolate Happy Birthday lettering and coffee beans in a dim café"
     }
   },
   "bakes": {

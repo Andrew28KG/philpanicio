@@ -57,16 +57,29 @@ const headline = LANGS.map((lang) => ({
 
     <div class="hero-visual">
       <div class="hero-arch arch">
+        {/* One photo per theme; CSS shows the matching one. Both are lazy so the
+            hidden one is never downloaded (the visible one is in view, so it loads at once). */}
         <Picture
-          class="hero-img"
+          class="hero-img hero-img-light"
           src={resolveImage(hero.image)}
           formats={['avif', 'webp']}
           widths={[420, 640, 860, 1200]}
           sizes="(min-width: 900px) 42vw, 86vw"
-          loading="eager"
+          loading="lazy"
           fetchpriority="high"
           data-parallax
           {...i18nAttrs({ alt: hero.imageAlt })}
+        />
+        <Picture
+          class="hero-img hero-img-dark"
+          src={resolveImage(hero.imageDark)}
+          formats={['avif', 'webp']}
+          widths={[420, 640, 860, 1200]}
+          sizes="(min-width: 900px) 42vw, 86vw"
+          loading="lazy"
+          fetchpriority="high"
+          data-parallax
+          {...i18nAttrs({ alt: hero.imageDarkAlt })}
         />
       </div>
       <div class="hero-stamp" aria-hidden="true">
@@ -152,6 +165,24 @@ const headline = LANGS.map((lang) => ({
     height: 112%;
     object-fit: cover;
     margin-top: -6%;
+  }
+  /* light/dark photo swap — same pattern as the theme icons in Header.astro */
+  .hero-arch :global(.hero-img-dark) {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .hero-arch :global(.hero-img-light) {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .hero-arch :global(.hero-img-dark) {
+    display: block;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .hero-arch :global(.hero-img-light) {
+      display: none;
+    }
+    :global(:root:not([data-theme='light'])) .hero-arch :global(.hero-img-dark) {
+      display: block;
+    }
   }
   .hero-stamp {
     position: absolute;

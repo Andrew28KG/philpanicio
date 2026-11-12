@@ -41,8 +41,8 @@ function initHero() {
   gsap.from(hero.querySelector('.hero-visual'), { y: 40, opacity: 0, scale: 0.96, duration: 1.3, delay: 0.2 });
 
   // Gentle parallax on the cake photo.
-  const img = hero.querySelector('[data-parallax]');
-  if (img) {
+  const img = hero.querySelectorAll('[data-parallax]'); // light + dark photo
+  if (img.length) {
     gsap.fromTo(
       img,
       { yPercent: -4 },
