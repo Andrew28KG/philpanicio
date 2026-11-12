@@ -112,23 +112,18 @@
     },
     "items": [
       { "image": "custom/vintage-heart-cake.jpg", "style": "vintage", "caption": { "id": "Vintage hati merah", "en": "Vintage red hearts" } },
-      { "image": "custom/timothy-train-cake.jpg", "style": "figure", "caption": { "id": "Kereta & figur fondant", "en": "Train & fondant figures" } },
       { "image": "custom/gold-floral-cake.jpg", "style": "floral", "caption": { "id": "Relief bunga emas", "en": "Gold floral relief" } },
       { "image": "custom/bees-rainbow-cake.jpg", "style": "figure", "caption": { "id": "Lebah & pelangi", "en": "Bees & rainbow" } },
       { "image": "custom/vintage-pink-tier-cake.jpg", "style": "vintage", "caption": { "id": "Vintage pink bertingkat", "en": "Tall pink vintage" } },
-      { "image": "custom/kezia-castle-cake.jpg", "style": "figure", "caption": { "id": "Figur di atas kastil pink", "en": "Figure on a pink castle" } },
       { "image": "custom/lilac-relief-cake.jpg", "style": "floral", "caption": { "id": "Relief bunga lilac", "en": "Lilac flower relief" } },
-      { "image": "custom/darren-ocean-cake.jpg", "style": "figure", "caption": { "id": "Dunia bawah laut", "en": "Under the sea" } },
       { "image": "custom/vintage-red-cake.jpg", "style": "vintage", "caption": { "id": "Vintage merah putih", "en": "Red & white vintage" } },
       { "image": "custom/grandma-85-cake.jpg", "style": "figure", "caption": { "id": "Figur Oma, ulang tahun ke-85", "en": "Grandma figure, 85th birthday" } },
       { "image": "custom/rose-candle-cake.jpg", "style": "floral", "caption": { "id": "Mawar & lilin", "en": "Roses & candles" } },
       { "image": "custom/poodle-party-cake.jpg", "style": "figure", "caption": { "id": "Poodle & kado", "en": "Poodle & gift boxes" } },
       { "image": "custom/birthday-gift-duo.jpg", "style": "vintage", "caption": { "id": "Duo pink & kado pita", "en": "Pink cake & bow gift duo" } },
-      { "image": "custom/matthew-tennis-cake.jpg", "style": "figure", "caption": { "id": "Figur pemain tenis", "en": "Tennis player figure" } },
       { "image": "custom/klepon-cake.jpg", "style": "floral", "caption": { "id": "Kue klepon kelapa", "en": "Klepon coconut cake" } },
       { "image": "custom/farm-boy-cake.jpg", "style": "figure", "caption": { "id": "Kebun & hewan kecil", "en": "Little farm" } },
       { "image": "custom/vintage-collection.jpg", "style": "vintage", "caption": { "id": "Koleksi mini vintage", "en": "Vintage mini collection" } },
-      { "image": "custom/rosa-flower-figure-cake.jpg", "style": "figure", "caption": { "id": "Figur & bunga fondant", "en": "Figure with fondant flowers" } },
       { "image": "custom/coffee-birthday-cake.jpg", "style": "floral", "caption": { "id": "Tema kopi", "en": "Coffee theme" } },
       { "image": "custom/island-figures-cake.jpg", "style": "figure", "caption": { "id": "Pantai tropis", "en": "Tropical island" } },
       { "image": "custom/sunflower-smile-cake.jpg", "style": "floral", "caption": { "id": "Bunga matahari tersenyum", "en": "Smiling sunflower" } },
@@ -165,10 +160,9 @@
     "online": { "id": "via WhatsApp", "en": "via WhatsApp" },
     "items": [
       {
-        "name": "Desy",
-        "note": { "id": "Kue ulang tahun Clover", "en": "Clover's birthday cake" },
+        "name": "D.",
+        "note": { "id": "Kue ulang tahun 2 tingkat dengan burung", "en": "Two-tier bird birthday cake" },
         "messages": [
-          { "from": "us", "time": "12.17", "text": "Thankyou buat kepercayaan desy 🙂", "en": "Thank you for trusting us, Desy" },
           { "from": "them", "time": "12.36", "text": "Wow… 😍😍😍" },
           { "from": "them", "time": "12.36", "text": "Gk sabar mau liat real nya", "en": "Can't wait to see it in person" },
           { "from": "them", "time": "19.20", "text": "Enaakkk bgt… bnr” full cake", "en": "Sooo good… the whole cake, really" },
@@ -176,7 +170,7 @@
         ]
       },
       {
-        "name": "Melly",
+        "name": "M.",
         "note": { "id": "Kue hati vintage dengan mutiara", "en": "Vintage heart cake with pearls" },
         "messages": [
           { "from": "them", "time": "09.10", "text": "Bagusss", "en": "Beautiful!" },
@@ -198,17 +192,17 @@
         ]
       },
       {
-        "name": "Desy",
-        "note": { "id": "Kue ulang tahun Claire & cupcake", "en": "Claire's birthday cake & cupcakes" },
+        "name": "D.",
+        "note": { "id": "Kue ulang tahun & cupcake", "en": "Birthday cake & cupcakes" },
         "messages": [
           { "from": "us", "time": "10.03", "text": "Lg dikerjakan", "en": "Working on it now" },
           { "from": "them", "time": "10.06", "text": "Wahhh 🥰🥰😍😍😍" },
-          { "from": "them", "time": "10.07", "text": "Pokoknya thankyou so much buat ko” Philip ci sri 🙌🙌❤️❤️", "en": "Thank you so, so much, Philip & Sri" },
+          { "from": "them", "time": "10.07", "text": "Pokoknya thankyou so much buat ko” Philip 🙌🙌❤️❤️", "en": "Thank you so, so much, Philip" },
           { "from": "them", "time": "18.52", "text": "Enak cii… padett slalu ☺️🙏 enak wangiii", "en": "Delicious… always so rich, and it smells amazing" }
         ]
       },
       {
-        "name": "Teli",
+        "name": "T.",
         "note": { "id": "Kue ulang tahun 2 tingkat", "en": "Two-tier birthday cake" },
         "messages": [
           { "from": "them", "time": "12.49", "text": "Keren bgtt Philip 🎉😊", "en": "So cool, Philip!" }

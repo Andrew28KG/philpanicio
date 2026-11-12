@@ -86,7 +86,7 @@ Useful fields:
 
 - `whatsapp`: the number in international format **without `+`** (`62895378416262`). Every WhatsApp button uses it.
 - `email`, `social.tiktok`: contact links.
-- `testimonials.items`: the "Kind Words" chat cards. Each one has `name`, `note` (what they ordered) and `messages`: a list of `{ "from": "them" | "us", "time": "12.36", "text": "original message", "en": "English translation" }`. Copy the customer's real words as they wrote them. `en` is optional and only shows in English mode.
+- `testimonials.items`: the "Kind Words" chat cards. Each one has `name`, `note` (what they ordered) and `messages`: a list of `{ "from": "them" | "us", "time": "12.36", "text": "original message", "en": "English translation" }`. Copy the customer's real words as they wrote them. **Privacy: use initials only (e.g. `"D."`), never full names, and leave out names of children or anyone else mentioned in the chat.** `en` is optional and only shows in English mode.
 - `messages.greeting` / `messages.product`: the pre-filled WhatsApp texts. `{product}` and `{price}` are filled in automatically.
 - `gallery.items`: photos and captions for the "Display Case".
 - `custom.items`: the "Custom Cakes" grid. Each one is `{ "image": "custom/x.jpg", "style": "figure" | "vintage" | "floral", "caption": { "id", "en" } }`. `style` decides which filter chip shows it. Tapping a photo opens it large, with a WhatsApp button that names the design.
@@ -117,7 +117,7 @@ src/assets/
 
 Product, hero and gallery photos are the real Pro photos in `src/assets/products/menu/`. Only the baker photo in `story/` is still a placeholder.
 
-**Custom-cake photos:** the big originals (5–14 MB PNGs) stay on this computer in `src/assets/CakeStyle/` and `src/assets/products/creation_*` / `magnific*`. They are git-ignored and skipped by the build. To add one to the site, save a resized copy (about 1200 px wide, JPG) into `src/assets/custom/` and add it to `custom.items`.
+**Custom-cake photos:** the big originals (5–14 MB PNGs) stay on this computer in `src/assets/CakeStyle/` and `src/assets/products/creation_*` / `magnific*`. They are git-ignored and skipped by the build. To add one to the site, save a resized copy (about 1200 px wide, JPG) into `src/assets/custom/` and add it to `custom.items`. **Don't use photos where a customer's name is written on the cake** ("Happy Birthday Rosa", name plaques, etc.).
 
 Tips:
 
