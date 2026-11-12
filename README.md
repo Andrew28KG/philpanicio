@@ -86,9 +86,10 @@ Useful fields:
 
 - `whatsapp`: the number in international format **without `+`** (`62895378416262`). Every WhatsApp button uses it.
 - `email`, `social.tiktok`: contact links.
-- `testimonials.items`: add or remove `{ "name", "note", "text" }` blocks. **The current ones are placeholders. Replace them with real quotes, with permission.**
+- `testimonials.items`: the "Kind Words" chat cards. Each one has `name`, `note` (what they ordered) and `messages`: a list of `{ "from": "them" | "us", "time": "12.36", "text": "original message", "en": "English translation" }`. Copy the customer's real words as they wrote them. `en` is optional and only shows in English mode.
 - `messages.greeting` / `messages.product`: the pre-filled WhatsApp texts. `{product}` and `{price}` are filled in automatically.
 - `gallery.items`: photos and captions for the "Display Case".
+- `custom.items`: the "Custom Cakes" grid. Each one is `{ "image": "custom/x.jpg", "style": "figure" | "vintage" | "floral", "caption": { "id", "en" } }`. `style` decides which filter chip shows it. Tapping a photo opens it large, with a WhatsApp button that names the design.
 - `seo`: the title and description shown when the link is shared on WhatsApp.
 
 ---
@@ -102,6 +103,7 @@ src/assets/
   hero/        big cake photo at the top
   products/    cakes/ and breads/ product photos
   gallery/     Display Case photos
+  custom/      Custom Cakes photos (compressed copies, ~100–200 KB each)
   story/       photo of Phillip
   og/          og-cover.jpg: the 1200×630 preview image for WhatsApp/social shares
   brand/       logo.jpg and logo-mark.jpg (round avatar in the header)
@@ -114,6 +116,8 @@ src/assets/
 3. Delete the old photo if it is no longer used.
 
 Product, hero and gallery photos are the real Pro photos in `src/assets/products/menu/`. Only the baker photo in `story/` is still a placeholder.
+
+**Custom-cake photos:** the big originals (5–14 MB PNGs) stay on this computer in `src/assets/CakeStyle/` and `src/assets/products/creation_*` / `magnific*`. They are git-ignored and skipped by the build. To add one to the site, save a resized copy (about 1200 px wide, JPG) into `src/assets/custom/` and add it to `custom.items`.
 
 Tips:
 

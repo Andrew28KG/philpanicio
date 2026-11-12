@@ -27,6 +27,7 @@
   "nav": {
     "bakes": { "id": "Kue Andalan", "en": "Signature Bakes" },
     "gallery": { "id": "Etalase", "en": "Display Case" },
+    "custom": { "id": "Kue Custom", "en": "Custom Cakes" },
     "story": { "id": "Cerita Kami", "en": "Our Story" },
     "order": { "id": "Pesan", "en": "Order" }
   },
@@ -89,6 +90,51 @@
       { "image": "products/menu/mini-cake-cherry.jpg", "caption": { "id": "Mini cake ceri", "en": "Cherry mini cake" } }
     ]
   },
+  "custom": {
+    "eyebrow": { "id": "Dibuat sesuai ceritamu", "en": "Made around your story" },
+    "title": { "id": "Kue Custom", "en": "Custom Cakes" },
+    "intro": {
+      "id": "Dari figur fondant sampai piping vintage — kirim ide atau foto referensimu, dan Phillip akan mewujudkannya. Ketuk foto untuk melihat lebih dekat.",
+      "en": "From fondant figures to vintage piping — send us your idea or a reference photo and Phillip will bring it to life. Tap a photo for a closer look."
+    },
+    "filtersLabel": { "id": "Saring berdasarkan gaya", "en": "Filter by style" },
+    "filters": {
+      "all": { "id": "Semua", "en": "All" },
+      "figure": { "id": "Figur & Karakter", "en": "Figures & Characters" },
+      "vintage": { "id": "Vintage", "en": "Vintage" },
+      "floral": { "id": "Bunga & Tema", "en": "Florals & Themes" }
+    },
+    "cta": { "id": "Tanya kue custom", "en": "Ask about a custom cake" },
+    "orderThis": { "id": "Pesan desain seperti ini", "en": "Order a design like this" },
+    "note": {
+      "id": "Harga tergantung ukuran dan detail desain. Tanyakan lewat WhatsApp, ya.",
+      "en": "Prices depend on the size and the detail of the design. Just ask on WhatsApp."
+    },
+    "items": [
+      { "image": "custom/vintage-heart-cake.jpg", "style": "vintage", "caption": { "id": "Vintage hati merah", "en": "Vintage red hearts" } },
+      { "image": "custom/timothy-train-cake.jpg", "style": "figure", "caption": { "id": "Kereta & figur fondant", "en": "Train & fondant figures" } },
+      { "image": "custom/gold-floral-cake.jpg", "style": "floral", "caption": { "id": "Relief bunga emas", "en": "Gold floral relief" } },
+      { "image": "custom/bees-rainbow-cake.jpg", "style": "figure", "caption": { "id": "Lebah & pelangi", "en": "Bees & rainbow" } },
+      { "image": "custom/vintage-pink-tier-cake.jpg", "style": "vintage", "caption": { "id": "Vintage pink bertingkat", "en": "Tall pink vintage" } },
+      { "image": "custom/kezia-castle-cake.jpg", "style": "figure", "caption": { "id": "Figur di atas kastil pink", "en": "Figure on a pink castle" } },
+      { "image": "custom/lilac-relief-cake.jpg", "style": "floral", "caption": { "id": "Relief bunga lilac", "en": "Lilac flower relief" } },
+      { "image": "custom/darren-ocean-cake.jpg", "style": "figure", "caption": { "id": "Dunia bawah laut", "en": "Under the sea" } },
+      { "image": "custom/vintage-red-cake.jpg", "style": "vintage", "caption": { "id": "Vintage merah putih", "en": "Red & white vintage" } },
+      { "image": "custom/grandma-85-cake.jpg", "style": "figure", "caption": { "id": "Figur Oma, ulang tahun ke-85", "en": "Grandma figure, 85th birthday" } },
+      { "image": "custom/rose-candle-cake.jpg", "style": "floral", "caption": { "id": "Mawar & lilin", "en": "Roses & candles" } },
+      { "image": "custom/poodle-party-cake.jpg", "style": "figure", "caption": { "id": "Poodle & kado", "en": "Poodle & gift boxes" } },
+      { "image": "custom/birthday-gift-duo.jpg", "style": "vintage", "caption": { "id": "Duo pink & kado pita", "en": "Pink cake & bow gift duo" } },
+      { "image": "custom/matthew-tennis-cake.jpg", "style": "figure", "caption": { "id": "Figur pemain tenis", "en": "Tennis player figure" } },
+      { "image": "custom/klepon-cake.jpg", "style": "floral", "caption": { "id": "Kue klepon kelapa", "en": "Klepon coconut cake" } },
+      { "image": "custom/farm-boy-cake.jpg", "style": "figure", "caption": { "id": "Kebun & hewan kecil", "en": "Little farm" } },
+      { "image": "custom/vintage-collection.jpg", "style": "vintage", "caption": { "id": "Koleksi mini vintage", "en": "Vintage mini collection" } },
+      { "image": "custom/rosa-flower-figure-cake.jpg", "style": "figure", "caption": { "id": "Figur & bunga fondant", "en": "Figure with fondant flowers" } },
+      { "image": "custom/coffee-birthday-cake.jpg", "style": "floral", "caption": { "id": "Tema kopi", "en": "Coffee theme" } },
+      { "image": "custom/island-figures-cake.jpg", "style": "figure", "caption": { "id": "Pantai tropis", "en": "Tropical island" } },
+      { "image": "custom/sunflower-smile-cake.jpg", "style": "floral", "caption": { "id": "Bunga matahari tersenyum", "en": "Smiling sunflower" } },
+      { "image": "custom/flower-garden-girl-cake.jpg", "style": "figure", "caption": { "id": "Taman bunga fondant", "en": "Fondant flower garden" } }
+    ]
+  },
   "story": {
     "eyebrow": { "id": "Kenalan dengan baker-nya", "en": "Meet the baker" },
     "title": { "id": "Cerita Kami", "en": "Our Story" },
@@ -110,39 +156,72 @@
   },
   "testimonials": {
     "eyebrow": { "id": "Kata mereka", "en": "Kind words" },
-    "title": { "id": "Dari meja mereka", "en": "From their tables" },
+    "title": { "id": "Langsung dari chat pelanggan", "en": "Straight from our customers' chats" },
+    "intro": {
+      "id": "Pesan asli dari pelanggan kami, disalin apa adanya.",
+      "en": "Real messages from our customers, copied just as they were sent. Translations are in italics."
+    },
+    "us": "Philpanicio",
+    "online": { "id": "via WhatsApp", "en": "via WhatsApp" },
     "items": [
       {
-        "name": "Ibu Maria",
-        "note": { "id": "Jemaat gereja", "en": "Church friend" },
-        "text": {
-          "id": "Kue ulang tahun anak saya habis dalam sepuluh menit. Lembut, tidak terlalu manis, dan cantik sekali!",
-          "en": "My son's birthday cake was gone in ten minutes. Soft, not too sweet, and so pretty!"
-        }
+        "name": "Desy",
+        "note": { "id": "Kue ulang tahun Clover", "en": "Clover's birthday cake" },
+        "messages": [
+          { "from": "us", "time": "12.17", "text": "Thankyou buat kepercayaan desy 🙂", "en": "Thank you for trusting us, Desy" },
+          { "from": "them", "time": "12.36", "text": "Wow… 😍😍😍" },
+          { "from": "them", "time": "12.36", "text": "Gk sabar mau liat real nya", "en": "Can't wait to see it in person" },
+          { "from": "them", "time": "19.20", "text": "Enaakkk bgt… bnr” full cake", "en": "Sooo good… the whole cake, really" },
+          { "from": "them", "time": "19.20", "text": "Even kemakan creamnya jg enyyaaakkkk 😘😘😘", "en": "Even the cream was soooo tasty" }
+        ]
       },
       {
-        "name": "Kak Daniel",
-        "note": { "id": "Teman keluarga", "en": "Family friend" },
-        "text": {
-          "id": "Sourdough-nya renyah di luar, lembut di dalam. Sekarang jadi langganan tiap Sabtu.",
-          "en": "The sourdough is crackly outside and soft inside. It's our Saturday ritual now."
-        }
+        "name": "Melly",
+        "note": { "id": "Kue hati vintage dengan mutiara", "en": "Vintage heart cake with pearls" },
+        "messages": [
+          { "from": "them", "time": "09.10", "text": "Bagusss", "en": "Beautiful!" },
+          { "from": "them", "time": "09.10", "text": "Pinter bangetttt 💖🥰🥰", "en": "So talented!" },
+          { "from": "us", "time": "09.11", "text": "Semoga suka ya kuenya 😃", "en": "Hope you love the cake" },
+          { "from": "them", "time": "09.12", "text": "Suka banget", "en": "Love it!" }
+        ]
       },
       {
-        "name": "Tante Lia",
-        "note": { "id": "Pelanggan setia", "en": "Regular customer" },
-        "text": {
-          "id": "Cinnamon roll-nya bikin rumah wangi seharian. Pesan lewat WhatsApp juga gampang.",
-          "en": "The cinnamon rolls made the whole house smell amazing. Ordering on WhatsApp was easy too."
-        }
+        "name": "Pelanggan",
+        "note": { "id": "Kue ulang tahun Pororo", "en": "Pororo birthday cake" },
+        "messages": [
+          {
+            "from": "them",
+            "time": "12.51",
+            "text": "Enak banget, pas manisnya… 👍👍 suka banget desainnya.. Sukses selalu ya 😆🥰🥰🥰",
+            "en": "So delicious, just the right sweetness… loved the design. All the best!"
+          }
+        ]
       },
       {
-        "name": "Om Budi",
-        "note": { "id": "Acara persekutuan", "en": "Fellowship gathering" },
-        "text": {
-          "id": "Pesan 40 potong untuk acara persekutuan — semua tepat waktu dan semua orang minta lagi.",
-          "en": "Ordered 40 slices for our fellowship night — on time, and everyone asked for more."
-        }
+        "name": "Desy",
+        "note": { "id": "Kue ulang tahun Claire & cupcake", "en": "Claire's birthday cake & cupcakes" },
+        "messages": [
+          { "from": "us", "time": "10.03", "text": "Lg dikerjakan", "en": "Working on it now" },
+          { "from": "them", "time": "10.06", "text": "Wahhh 🥰🥰😍😍😍" },
+          { "from": "them", "time": "10.07", "text": "Pokoknya thankyou so much buat ko” Philip ci sri 🙌🙌❤️❤️", "en": "Thank you so, so much, Philip & Sri" },
+          { "from": "them", "time": "18.52", "text": "Enak cii… padett slalu ☺️🙏 enak wangiii", "en": "Delicious… always so rich, and it smells amazing" }
+        ]
+      },
+      {
+        "name": "Teli",
+        "note": { "id": "Kue ulang tahun 2 tingkat", "en": "Two-tier birthday cake" },
+        "messages": [
+          { "from": "them", "time": "12.49", "text": "Keren bgtt Philip 🎉😊", "en": "So cool, Philip!" }
+        ]
+      },
+      {
+        "name": "Pelanggan",
+        "note": { "id": "Number cake huruf C", "en": "Letter C number cake" },
+        "messages": [
+          { "from": "them", "time": "12.55", "text": "Jangan lupa ya kk nanti di tambahkan bunga kecil bbrp saja", "en": "Don't forget to add a few little flowers" },
+          { "from": "us", "time": "12.56", "text": "Seperti ini, sudah ok?", "en": "Like this, is it okay?" },
+          { "from": "them", "time": "12.57", "text": "Ok. Cukup. Terima kasih. The best Philpanicio 🥰🥰🥰", "en": "Perfect. Thank you. The best!" }
+        ]
       }
     ]
   },
@@ -183,6 +262,14 @@
       "id": "Halo Philpanicio! Saya mau pesan:",
       "en": "Hi Philpanicio! I'd like to order:"
     },
-    "cartTotal": { "id": "Total", "en": "Total" }
+    "cartTotal": { "id": "Total", "en": "Total" },
+    "custom": {
+      "id": "Halo Philpanicio! Saya mau tanya kue custom, ya 😊 Ini ide/referensi desain saya: ...",
+      "en": "Hi Philpanicio! I'd like to ask about a custom cake 😊 Here's my design idea/reference: ..."
+    },
+    "customDesign": {
+      "id": "Halo Philpanicio! Saya mau pesan kue custom seperti desain *{design}* di website. Apakah bisa untuk tanggal ...?",
+      "en": "Hi Philpanicio! I'd like to order a custom cake like the *{design}* design on your website. Is it available for ...?"
+    }
   }
 }

@@ -4,10 +4,12 @@ import { initPrefs } from './prefs';
 import { initModals } from './modal';
 import { initTilt } from './tilt';
 import { initGallery } from './gallery';
+import { initCustom } from './custom';
 
 initPrefs();
 initModals();
 initGallery();
+initCustom();
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 

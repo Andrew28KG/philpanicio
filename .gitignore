@@ -34,3 +34,9 @@ src/assets/Extra/
 src/assets/products/cakes/
 src/assets/products/Pro*
 social-media/prompt-foto-extra.md
+social-media/testimoni/
+# heavy originals of the custom-cake photos (5–14 MB each) and reference screenshots;
+# the site uses the compressed copies in src/assets/custom/
+src/assets/CakeStyle/
+src/assets/products/creation_*
+src/assets/products/magnific*

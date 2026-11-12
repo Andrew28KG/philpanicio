@@ -1,0 +1,407 @@
+---
+// Custom-cake portfolio: filterable photo grid + one shared lightbox with an
+// "order a design like this" WhatsApp button (scripts/custom.ts).
+import { Picture, getImage } from 'astro:assets';
+import site from '../data/site.json';
+import { resolveImage } from '../lib/images';
+import { fill, i18nAttrs, type Localized } from '../lib/i18n';
+import { waLink } from '../lib/whatsapp';
+import T from './T.astro';
+import Doodle from './Doodle.astro';
+import WaIcon from './WaIcon.astro';
+
+const { custom, ui, messages } = site;
+const filters = Object.entries(custom.filters) as [string, Localized][];
+const askHref = { id: waLink(messages.custom.id), en: waLink(messages.custom.en) };
+
+const items = await Promise.all(
+  custom.items.map(async (item) => {
+    const src = resolveImage(item.image);
+    const full = await getImage({ src, width: 1000, format: 'webp' });
+    const caption = item.caption as Localized;
+    const cap = typeof caption === 'string' ? { id: caption, en: caption } : caption;
+    return {
+      ...item,
+      src,
+      full: full.src,
+      cap,
+      wa: {
+        id: waLink(fill(messages.customDesign.id, { design: cap.id })),
+        en: waLink(fill(messages.customDesign.en, { design: cap.en })),
+      },
+    };
+  }),
+);
+---
+
+<section class="section custom" id="custom" aria-labelledby="custom-title" data-custom>
+  <div class="container">
+    <div class="custom-head">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><T v={custom.eyebrow} /></p>
+        <h2 class="section-title" id="custom-title"><T v={custom.title} /></h2>
+        <p class="section-intro"><T v={custom.intro} /></p>
+      </div>
+      <Doodle name="sprinkles" class="d-sprinkles" />
+      <Doodle name="heart" class="d-heart" />
+    </div>
+
+    <div class="custom-filters" role="group" {...i18nAttrs({ 'aria-label': custom.filtersLabel })} data-reveal>
+      {
+        filters.map(([key, label], i) => (
+          <button type="button" class="chip" data-filter={key} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <T v={label} />
+            <span class="chip-count">
+              {key === 'all' ? items.length : items.filter((item) => item.style === key).length}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <ul class="custom-grid" role="list">
+      {
+        items.map((item, i) => (
+          <li class="tile" data-style={item.style} data-reveal-item>
+            <button
+              type="button"
+              class="tile-btn"
+              data-custom-open={i}
+              data-full={item.full}
+              data-cap-id={item.cap.id}
+              data-cap-en={item.cap.en}
+              data-wa-id={item.wa.id}
+              data-wa-en={item.wa.en}
+            >
+              <Picture
+                src={item.src}
+                formats={['avif', 'webp']}
+                widths={[240, 360, 520]}
+                sizes="(min-width: 1100px) 270px, (min-width: 700px) 31vw, 46vw"
+                loading="lazy"
+                {...i18nAttrs({ alt: item.cap })}
+              />
+              <span class="tile-cap">
+                <T v={item.cap} />
+              </span>
+              <span class="tile-zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg>
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="custom-cta" data-reveal>
+      <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: askHref })}>
+        <WaIcon />
+        <T v={custom.cta} />
+      </a>
+      <p class="custom-note"><T v={custom.note} /></p>
+    </div>
+  </div>
+
+  <dialog class="lightbox" id="custom-lightbox" aria-labelledby="lightbox-cap" data-modal data-lenis-prevent data-lightbox>
+    <div class="lightbox-inner">
+      <button class="lb-close" type="button" data-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        <span class="sr-only"><T v={ui.close} /></span>
+      </button>
+      <div class="lb-media">
+        <img data-lb-img alt="" width="1000" height="1000" decoding="async" />
+        <button class="lb-nav lb-prev" type="button" data-lb-step="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+          <span class="sr-only"><T v={{ id: 'Foto sebelumnya', en: 'Previous photo' }} /></span>
+        </button>
+        <button class="lb-nav lb-next" type="button" data-lb-step="1">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+          <span class="sr-only"><T v={{ id: 'Foto berikutnya', en: 'Next photo' }} /></span>
+        </button>
+      </div>
+      <div class="lb-body">
+        <p class="lb-cap" id="lightbox-cap">
+          <span class="i18n" lang="id" data-lb-cap="id"></span>
+          <span class="i18n" lang="en" data-lb-cap="en"></span>
+        </p>
+        <a class="btn" target="_blank" rel="noopener" data-lb-wa>
+          <WaIcon />
+          <T v={custom.orderThis} />
+        </a>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .custom {
+    padding-top: clamp(3rem, 8vw, 5.5rem);
+  }
+  .custom-head {
+    position: relative;
+  }
+  .d-sprinkles {
+    width: 74px;
+    right: 0.5rem;
+    top: -1.5rem;
+    color: var(--berry);
+    opacity: 0.55;
+  }
+  .d-heart {
+    width: 46px;
+    right: 6rem;
+    top: 3.5rem;
+    color: var(--accent);
+    opacity: 0.7;
+    display: none;
+  }
+
+  .custom-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: -0.75rem 0 1.75rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1.5px var(--line);
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chip:hover {
+    color: var(--text);
+    box-shadow: inset 0 0 0 1.5px var(--wood);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--invert-bg);
+    color: var(--invert-text);
+    box-shadow: none;
+  }
+  .chip-count {
+    min-width: 1.6em;
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .custom-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tile[hidden] {
+    display: none;
+  }
+  .tile-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--bg-alt);
+    box-shadow: var(--shadow-sm);
+    cursor: zoom-in;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tile-btn :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .tile-cap {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 2.2rem 0.75rem 0.65rem;
+    background: linear-gradient(to top, rgba(28, 18, 12, 0.78), transparent);
+    color: #fff8ee;
+    font-weight: 800;
+    font-size: 0.86rem;
+    line-height: 1.25;
+  }
+  .tile-zoom {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 248, 238, 0.9);
+    color: #3b2a22;
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+      opacity 0.25s,
+      transform 0.25s var(--ease-out);
+  }
+  .tile-zoom svg {
+    width: 18px;
+    height: 18px;
+  }
+  @media (hover: hover) {
+    .tile-btn:hover :global(img) {
+      transform: scale(1.05);
+    }
+    .tile-btn:hover .tile-zoom,
+    .tile-btn:focus-visible .tile-zoom {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .custom-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+    text-align: center;
+  }
+  .custom-note {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  /* lightbox */
+  .lightbox {
+    width: min(560px, calc(100% - 2rem));
+    max-height: 94dvh;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .lightbox[open] {
+    animation: lb-pop 0.4s var(--ease-out);
+  }
+  .lightbox::backdrop {
+    background: rgba(28, 18, 12, 0.7);
+    backdrop-filter: blur(3px);
+  }
+  .lightbox-inner {
+    position: relative;
+  }
+  .lb-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+  }
+  .lb-close svg,
+  .lb-nav svg {
+    width: 20px;
+    height: 20px;
+  }
+  .lb-media {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--bg-alt);
+  }
+  .lb-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-top: -22px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 248, 238, 0.92);
+    color: #3b2a22;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+  .lb-prev {
+    left: 0.75rem;
+  }
+  .lb-next {
+    right: 0.75rem;
+  }
+  .lb-body {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem 1.4rem 1.5rem;
+  }
+  .lb-cap {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--heading);
+  }
+  .lb-body .btn {
+    width: 100%;
+  }
+
+  @keyframes lb-pop {
+    from {
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 700px) {
+    .custom-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .tile:nth-child(6n + 1) .tile-btn {
+      transform: rotate(-0.8deg);
+    }
+    .tile:nth-child(6n + 4) .tile-btn {
+      transform: rotate(0.8deg);
+    }
+    .d-heart {
+      display: block;
+    }
+  }
+  @media (min-width: 1100px) {
+    .custom-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.15rem;
+    }
+  }
+</style>
