@@ -116,6 +116,15 @@
       "en": "Prices depend on the size and the detail of the design. Just ask on WhatsApp."
     },
     "items": [
+      { "image": "custom/bird-garden-two-tier.jpg", "style": "figure", "caption": { "id": "Burung & pita dua tingkat", "en": "Two-tier birds & bow" } },
+      { "image": "custom/vintage-mini-four.jpg", "style": "vintage", "caption": { "id": "Empat mini cake vintage", "en": "Four vintage mini cakes" } },
+      { "image": "custom/candy-drip-cake.jpg", "style": "floral", "caption": { "id": "Drip cake permen & lolipop", "en": "Candy & lollipop drip cake" } },
+      { "image": "custom/rabbit-garden-cake.jpg", "style": "figure", "caption": { "id": "Kelinci di kebun sayur", "en": "Rabbit in the vegetable garden" } },
+      { "image": "custom/strawberry-cream-cake.jpg", "style": "vintage", "caption": { "id": "Krim stroberi vintage", "en": "Vintage strawberry cream" } },
+      { "image": "custom/pink-rose-two-tier.jpg", "style": "floral", "caption": { "id": "Mawar fondant dua tingkat", "en": "Two-tier fondant roses" } },
+      { "image": "custom/spider-hero-tiers.jpg", "style": "figure", "caption": { "id": "Superhero laba-laba bertingkat", "en": "Stepped spider-hero cake" } },
+      { "image": "custom/vintage-teal-duo.jpg", "style": "vintage", "caption": { "id": "Duo vintage teal & biru", "en": "Teal & blue vintage duo" } },
+      { "image": "custom/brownie-flower-sheet.jpg", "style": "floral", "caption": { "id": "Brownie taman bunga", "en": "Brownie flower garden" } },
       { "image": "custom/vintage-heart-cake.jpg", "style": "vintage", "caption": { "id": "Vintage hati merah", "en": "Vintage red hearts" } },
       { "image": "custom/gold-floral-cake.jpg", "style": "floral", "caption": { "id": "Relief bunga emas", "en": "Gold floral relief" } },
       { "image": "custom/bees-rainbow-cake.jpg", "style": "figure", "caption": { "id": "Lebah & pelangi", "en": "Bees & rainbow" } },
@@ -158,15 +167,21 @@
     "eyebrow": { "id": "Kata mereka", "en": "Kind words" },
     "title": { "id": "Langsung dari chat pelanggan", "en": "Straight from our customers' chats" },
     "intro": {
-      "id": "Pesan asli dari pelanggan kami, disalin apa adanya.",
-      "en": "Real messages from our customers, copied just as they were sent. Translations are in italics."
+      "id": "Pesan asli dari pelanggan kami, disalin apa adanya. Ketuk kartunya untuk melihat kuenya.",
+      "en": "Real messages from our customers, copied just as they were sent. Translations are in italics. Tap a card to see the cake."
     },
     "us": "Philpanicio",
+    "seeCake": { "id": "Lihat kuenya", "en": "See the cake" },
+    "exact": { "id": "Kue yang dipesan", "en": "The cake they ordered" },
+    "similar": { "id": "Contoh kue serupa", "en": "A similar cake" },
+    "orderLike": { "id": "Pesan kue seperti ini", "en": "Order a cake like this" },
     "online": { "id": "via WhatsApp", "en": "via WhatsApp" },
     "items": [
       {
         "name": "D.",
         "note": { "id": "Kue ulang tahun 2 tingkat dengan burung", "en": "Two-tier bird birthday cake" },
+        "cake": "custom/bird-garden-two-tier.jpg",
+        "match": "exact",
         "messages": [
           { "from": "them", "time": "12.36", "text": "Wow… 😍😍😍" },
           { "from": "them", "time": "12.36", "text": "Gk sabar mau liat real nya", "en": "Can't wait to see it in person" },
@@ -177,6 +192,8 @@
       {
         "name": "M.",
         "note": { "id": "Kue hati vintage dengan mutiara", "en": "Vintage heart cake with pearls" },
+        "cake": "custom/vintage-pink-tier-cake.jpg",
+        "match": "similar",
         "messages": [
           { "from": "them", "time": "09.10", "text": "Bagusss", "en": "Beautiful!" },
           { "from": "them", "time": "09.10", "text": "Pinter bangetttt 💖🥰🥰", "en": "So talented!" },
@@ -187,6 +204,8 @@
       {
         "name": "Pelanggan",
         "note": { "id": "Kue ulang tahun Pororo", "en": "Pororo birthday cake" },
+        "cake": "custom/bees-rainbow-cake.jpg",
+        "match": "similar",
         "messages": [
           {
             "from": "them",
@@ -199,6 +218,8 @@
       {
         "name": "D.",
         "note": { "id": "Kue ulang tahun & cupcake", "en": "Birthday cake & cupcakes" },
+        "cake": "custom/candy-drip-cake.jpg",
+        "match": "similar",
         "messages": [
           { "from": "us", "time": "10.03", "text": "Lg dikerjakan", "en": "Working on it now" },
           { "from": "them", "time": "10.06", "text": "Wahhh 🥰🥰😍😍😍" },
@@ -209,6 +230,8 @@
       {
         "name": "T.",
         "note": { "id": "Kue ulang tahun 2 tingkat", "en": "Two-tier birthday cake" },
+        "cake": "custom/pink-rose-two-tier.jpg",
+        "match": "similar",
         "messages": [
           { "from": "them", "time": "12.49", "text": "Keren bgtt Philip 🎉😊", "en": "So cool, Philip!" }
         ]
@@ -216,10 +239,21 @@
       {
         "name": "Pelanggan",
         "note": { "id": "Number cake huruf C", "en": "Letter C number cake" },
+        "cake": "custom/rose-candle-cake.jpg",
+        "match": "similar",
         "messages": [
           { "from": "them", "time": "12.55", "text": "Jangan lupa ya kk nanti di tambahkan bunga kecil bbrp saja", "en": "Don't forget to add a few little flowers" },
           { "from": "us", "time": "12.56", "text": "Seperti ini, sudah ok?", "en": "Like this, is it okay?" },
           { "from": "them", "time": "12.57", "text": "Ok. Cukup. Terima kasih. The best Philpanicio 🥰🥰🥰", "en": "Perfect. Thank you. The best!" }
+        ]
+      },
+      {
+        "name": "Pelanggan",
+        "note": { "id": "Kue ulang tahun ekskavator", "en": "Excavator birthday cake" },
+        "cake": "custom/farm-boy-cake.jpg",
+        "match": "similar",
+        "messages": [
+          { "from": "them", "time": "08.47", "text": "Wah alhamdulillah sudah jadi", "en": "Wow, thank God, it turned out great" }
         ]
       }
     ]

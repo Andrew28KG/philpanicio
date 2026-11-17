@@ -1,10 +1,16 @@
 ---
 // Real customer messages, laid out as little chat windows (masonry columns).
 // Bubbles keep the original Indonesian; English mode adds an italic translation.
+// Each card opens a <dialog> (modal.ts) with the cake: the real one when we have
+// its photo ("exact"), otherwise a similar cake from the Custom Cakes gallery.
+import { Image } from 'astro:assets';
 import site from '../data/site.json';
-import type { Localized } from '../lib/i18n';
+import { resolveImage } from '../lib/images';
+import { fill, i18nAttrs, type Localized } from '../lib/i18n';
+import { waLink } from '../lib/whatsapp';
 import T from './T.astro';
 import Doodle from './Doodle.astro';
+import WaIcon from './WaIcon.astro';
 
 interface Message {
   from: 'them' | 'us';
@@ -16,11 +22,30 @@ interface Item {
   name: string;
   note: Localized;
   messages: Message[];
+  cake?: string;
+  match?: 'exact' | 'similar';
 }
 
 const { testimonials } = site;
 const items = testimonials.items as Item[];
 const tones = ['honey', 'berry', 'wood', 'brand'];
+
+// Caption of each cake photo, taken from the Custom Cakes list.
+const captions = new Map(site.custom.items.map((c) => [c.image, c.caption as { id: string; en: string }]));
+const cakeFor = (item: Item) => {
+  if (!item.cake) return null;
+  const cap = captions.get(item.cake) ?? (item.note as { id: string; en: string });
+  return {
+    src: resolveImage(item.cake),
+    cap,
+    label: item.match === 'exact' ? testimonials.exact : testimonials.similar,
+    wa: {
+      id: waLink(fill(site.messages.customDesign.id, { design: cap.id })),
+      en: waLink(fill(site.messages.customDesign.en, { design: cap.en })),
+    },
+  };
+};
+const cards = items.map((item) => ({ item, cake: cakeFor(item) }));
 ---
 
 <section class="section words" aria-labelledby="words-title">
@@ -37,9 +62,9 @@ const tones = ['honey', 'berry', 'wood', 'brand'];
 
       <ul class="chats" role="list">
         {
-          items.map((item, i) => (
+          cards.map(({ item, cake }, i) => (
             <li class="chat-item" data-reveal-item>
-              <figure class="chat">
+              <figure class:list={['chat', { 'is-clickable': cake }]} data-open-modal={cake ? `cake-${i}` : undefined}>
                 <figcaption class="chat-bar">
                   <span class={`avatar tone-${tones[i % tones.length]}`} aria-hidden="true">
                     {item.name.charAt(0)}
@@ -73,6 +98,20 @@ const tones = ['honey', 'berry', 'wood', 'brand'];
                     </p>
                   ))}
                 </blockquote>
+                {cake && (
+                  <button type="button" class="chat-cake" data-open-modal={`cake-${i}`}>
+                    <Image src={cake.src} width={88} height={88} alt="" loading="lazy" class="chat-thumb" />
+                    <span class="chat-cake-text">
+                      <span class="chat-cake-label">
+                        <T v={cake.label} />
+                      </span>
+                      <span class="chat-cake-see">
+                        <T v={testimonials.seeCake} />
+                      </span>
+                    </span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                )}
               </figure>
             </li>
           ))
@@ -80,6 +119,43 @@ const tones = ['honey', 'berry', 'wood', 'brand'];
       </ul>
     </div>
   </div>
+
+  {
+    cards.map(
+      ({ item, cake }, i) =>
+        cake && (
+          <dialog class="cake-modal" id={`cake-${i}`} aria-labelledby={`cake-${i}-title`} data-modal data-lenis-prevent>
+            <button class="cm-close" type="button" data-close>
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              <span class="sr-only"><T v={site.ui.close} /></span>
+            </button>
+            <Image
+              class="cm-img"
+              src={cake.src}
+              widths={[420, 640, 900]}
+              sizes="(min-width: 600px) 520px, 92vw"
+              loading="lazy"
+              {...i18nAttrs({ alt: cake.cap })}
+            />
+            <div class="cm-body">
+              <p class:list={['cm-label', `is-${item.match}`]}>
+                <T v={cake.label} />
+              </p>
+              <h3 class="cm-title" id={`cake-${i}-title`}>
+                <T v={cake.cap} />
+              </h3>
+              <p class="cm-note">
+                {item.name} · <T v={item.note} />
+              </p>
+              <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: cake.wa })}>
+                <WaIcon />
+                <T v={testimonials.orderLike} />
+              </a>
+            </div>
+          </dialog>
+        ),
+    )
+  }
 </section>
 
 <style>
@@ -125,6 +201,149 @@ const tones = ['honey', 'berry', 'wood', 'brand'];
       inset 0 0 0 1px var(--line),
       var(--shadow);
   }
+  .chat.is-clickable {
+    cursor: pointer;
+    transition:
+      transform 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
+  }
+  @media (hover: hover) {
+    .chat.is-clickable:hover {
+      transform: translateY(-4px) rotate(0deg);
+      box-shadow:
+        inset 0 0 0 1px var(--line),
+        var(--shadow-lg);
+    }
+  }
+  .chat-cake {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface-strong);
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chat-cake > svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    color: var(--brand);
+  }
+  .chat-cake :global(.chat-thumb) {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: var(--bg-alt);
+  }
+  .chat-cake-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .chat-cake-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .chat-cake-see {
+    font-weight: 800;
+    color: var(--brand);
+  }
+
+  /* cake popup */
+  .cake-modal {
+    width: min(520px, calc(100% - 2rem));
+    max-height: 94dvh;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .cake-modal[open] {
+    animation: cm-pop 0.4s var(--ease-out);
+  }
+  .cake-modal::backdrop {
+    background: rgba(28, 18, 12, 0.7);
+    backdrop-filter: blur(3px);
+  }
+  .cm-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+  }
+  .cm-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  .cake-modal :global(.cm-img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: var(--bg-alt);
+  }
+  .cm-body {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.25rem 1.4rem 1.5rem;
+  }
+  .cm-label {
+    justify-self: start;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--bg-alt);
+    color: var(--text-soft);
+  }
+  .cm-label.is-exact {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .cm-title {
+    font-size: 1.45rem;
+  }
+  .cm-note {
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .cm-body .btn {
+    width: 100%;
+  }
+  @keyframes cm-pop {
+    from {
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+    }
+  }
+
   .chat-item:nth-child(3n + 1) .chat {
     transform: rotate(-0.7deg);
   }
