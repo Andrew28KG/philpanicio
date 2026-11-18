@@ -1,0 +1,221 @@
+---
+// One page per custom-cake design (/kue/<slug>/). Its share image is the cake
+// photo, so a link to it in a WhatsApp message shows the cake as a preview.
+import { Picture, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingWhatsApp from '../../components/FloatingWhatsApp.astro';
+import OrderForm from '../../components/OrderForm.astro';
+import T from '../../components/T.astro';
+import WaIcon from '../../components/WaIcon.astro';
+import site from '../../data/site.json';
+import { resolveImage } from '../../lib/images';
+import { fill, i18nAttrs, type Localized } from '../../lib/i18n';
+import { waLink } from '../../lib/whatsapp';
+import { withBase } from '../../lib/paths';
+import { designPath, designUrl, getDesigns, type Design } from '../../lib/designs';
+
+export function getStaticPaths() {
+  const designs = getDesigns();
+  return designs.map((design, i) => ({
+    params: { slug: design.slug },
+    // a few other designs to browse, starting with ones of the same style
+    props: {
+      design,
+      more: [
+        ...designs.filter((d, j) => j !== i && d.style === design.style),
+        ...designs.filter((d, j) => j !== i && d.style !== design.style),
+      ].slice(0, 4),
+    },
+  }));
+}
+
+interface Props {
+  design: Design;
+  more: Design[];
+}
+const { design, more } = Astro.props;
+const { caption } = design;
+const src = resolveImage(design.image);
+const thumb = await getImage({ src, width: 160, height: 160, fit: 'cover', format: 'webp' });
+const link = designUrl(design.slug, Astro.site);
+const style = (site.custom.filters as Record<string, Localized>)[design.style];
+const wa = {
+  id: waLink(fill(site.messages.customDesign.id, { design: caption.id })),
+  en: waLink(fill(site.messages.customDesign.en, { design: caption.en })),
+};
+const title = { id: `${caption.id} · Kue Custom ${site.name}`, en: `${caption.en} · ${site.name} Custom Cakes` };
+---
+
+<Base title={title} description={site.designPage.body} image={design.image} imageAlt={caption.id}>
+  <Header subpage />
+  <main id="main" class="design">
+    <div class="container">
+      <a class="back" href={`${withBase('')}#custom`}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+        <T v={site.designPage.back} />
+      </a>
+
+      <article class="design-grid">
+        <div class="design-photo">
+          <Picture
+            src={src}
+            formats={['avif', 'webp']}
+            widths={[420, 640, 900, 1200]}
+            sizes="(min-width: 900px) 540px, 92vw"
+            loading="eager"
+            fetchpriority="high"
+            {...i18nAttrs({ alt: caption })}
+          />
+        </div>
+        <div class="design-body">
+          <p class="eyebrow"><T v={site.custom.title} /> · <T v={style} /></p>
+          <h1 class="design-title"><T v={caption} /></h1>
+          <p class="design-text"><T v={site.designPage.body} /></p>
+          <p class="design-note"><T v={site.custom.note} /></p>
+          <a
+            class="btn btn-lg"
+            target="_blank"
+            rel="noopener"
+            {...i18nAttrs({ href: wa })}
+            data-order
+            data-order-kind="custom"
+            data-order-name-id={caption.id}
+            data-order-name-en={caption.en}
+            data-order-link={link}
+            data-order-img={thumb.src}
+          >
+            <WaIcon />
+            <T v={site.custom.orderThis} />
+          </a>
+        </div>
+      </article>
+
+      <section class="more" aria-labelledby="more-title">
+        <h2 class="more-title" id="more-title"><T v={site.designPage.more} /></h2>
+        <ul class="more-grid" role="list">
+          {
+            more.map((d) => (
+              <li>
+                <a href={designPath(d.slug)}>
+                  <Picture
+                    src={resolveImage(d.image)}
+                    formats={['avif', 'webp']}
+                    widths={[240, 360]}
+                    sizes="(min-width: 900px) 260px, 45vw"
+                    loading="lazy"
+                    alt=""
+                  />
+                  <span>
+                    <T v={d.caption} />
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </main>
+  <Footer />
+  <FloatingWhatsApp />
+  <OrderForm />
+</Base>
+
+<script>
+  import '../../scripts/main';
+</script>
+
+<style>
+  .design {
+    padding-block: calc(var(--header-h) + 1.5rem) 4rem;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+    font-weight: 800;
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .back svg {
+    width: 18px;
+    height: 18px;
+  }
+  .design-grid {
+    display: grid;
+    gap: 1.75rem;
+    align-items: center;
+  }
+  .design-photo {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-alt);
+    box-shadow: var(--shadow-lg);
+  }
+  .design-photo :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .design-title {
+    font-size: clamp(2rem, 7vw, 3.2rem);
+  }
+  .design-text {
+    margin-top: 0.9rem;
+    color: var(--text-soft);
+    font-size: 1.08rem;
+  }
+  .design-note {
+    margin: 0.6rem 0 1.5rem;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+  .btn-lg {
+    min-height: 58px;
+    font-size: 1.08rem;
+  }
+  .more {
+    margin-top: clamp(3rem, 8vw, 5rem);
+  }
+  .more-title {
+    margin-bottom: 1.1rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .more-grid a {
+    display: grid;
+    gap: 0.45rem;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+  .more-grid :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--bg-alt);
+    box-shadow: var(--shadow-sm);
+  }
+  @media (min-width: 900px) {
+    .design-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+    }
+    .more-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+  }
+</style>

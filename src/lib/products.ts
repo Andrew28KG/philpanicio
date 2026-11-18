@@ -16,6 +16,11 @@ const productSchema = z.object({
   unit: localized.optional(),
   specs: z.array(z.object({ label: localized, value: localized })).default([]),
   designs: z.array(z.object({ image: z.string().min(1), label: localized })).default([]),
+  // Choices the order form offers (e.g. flavour, jam). Each picks one.
+  options: z
+    .array(z.object({ key: z.string().min(1), label: localized, choices: z.array(localized).min(1) }))
+    .default([]),
+  maxQty: z.number().int().positive().optional(),
   category: z.string().min(1),
   image: z.string().min(1),
   featured: z.boolean().default(false),
@@ -28,6 +33,7 @@ export type Product = z.infer<typeof productSchema> & {
   unit?: Localized;
   specs: { label: Localized; value: Localized }[];
   designs: { image: string; label: Localized }[];
+  options: { key: string; label: Localized; choices: Localized[] }[];
 };
 
 function load(): Product[] {

@@ -43,6 +43,7 @@
     "price": 14000,
     "unit": { "id": "/ satuan", "en": "/ piece" },
     "specs": [{ "label": { "id": "Maks. order", "en": "Max order" }, "value": { "id": "6 pcs", "en": "6 pcs" } }],
+    "maxQty": 6,
     "category": "muffin",
     "image": "products/menu/chocolate-muffin.jpg",
     "featured": true,
@@ -60,6 +61,16 @@
       { "label": { "id": "Layer", "en": "Layers" }, "value": { "id": "3 layer fudgy chocolate cake", "en": "3 layers of fudgy chocolate cake" } },
       { "label": { "id": "Isian", "en": "Filling" }, "value": { "id": "2 lapis: Salted Caramel atau Chocolate Ganache", "en": "2 layers: Salted Caramel or Chocolate Ganache" } },
       { "label": { "id": "Ukuran", "en": "Size" }, "value": "11 × 22 cm" }
+    ],
+    "options": [
+      {
+        "key": "filling",
+        "label": { "id": "Isian", "en": "Filling" },
+        "choices": [
+          { "id": "Salted Caramel", "en": "Salted Caramel" },
+          { "id": "Chocolate Ganache", "en": "Chocolate Ganache" }
+        ]
+      }
     ],
     "category": "cake",
     "image": "products/menu/london-cake.jpg",
@@ -80,6 +91,26 @@
       { "label": { "id": "Rasa", "en": "Flavour" }, "value": { "id": "Vanilla, Coklat, atau Pandan", "en": "Vanilla, Chocolate or Pandan" } },
       { "label": { "id": "Selai", "en": "Jam" }, "value": { "id": "Strawberry, Keju, atau Coklat (pilih salah satu)", "en": "Strawberry, Cheese or Chocolate (choose one)" } },
       { "label": { "id": "Dekorasi", "en": "Decoration" }, "value": { "id": "Standar. Ada banyak pilihan desain, tanyakan lewat WhatsApp", "en": "Standard. Many more designs available, just ask on WhatsApp" } }
+    ],
+    "options": [
+      {
+        "key": "flavour",
+        "label": { "id": "Rasa", "en": "Flavour" },
+        "choices": [
+          { "id": "Vanilla", "en": "Vanilla" },
+          { "id": "Coklat", "en": "Chocolate" },
+          { "id": "Pandan", "en": "Pandan" }
+        ]
+      },
+      {
+        "key": "jam",
+        "label": { "id": "Selai", "en": "Jam" },
+        "choices": [
+          { "id": "Strawberry", "en": "Strawberry" },
+          { "id": "Keju", "en": "Cheese" },
+          { "id": "Coklat", "en": "Chocolate" }
+        ]
+      }
     ],
     "category": "cake",
     "image": "products/menu/mini-cake.jpg",

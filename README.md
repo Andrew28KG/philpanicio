@@ -57,6 +57,8 @@ Each product is one `{ ... }` block in the list:
 | `unit`        | Optional. Text shown after the price, e.g. `{ "id": "/ satuan", "en": "/ piece" }`                           |
 | `specs`       | Optional list of detail rows in the product popup: `[{ "label": "Ukuran", "value": "14 cm" }, …]`. Both `label` and `value` can be a string or `{ "id", "en" }` |
 | `designs`     | Optional list of extra photos shown as "Design options" in the popup: `[{ "image": "products/menu/x.jpg", "label": "Cherry" }]` |
+| `options`     | Optional. Choices in the order form, e.g. `[{ "key": "flavour", "label": { "id": "Rasa", "en": "Flavour" }, "choices": [{ "id": "Vanilla", "en": "Vanilla" }] }]` |
+| `maxQty`      | Optional. Highest quantity the order form allows (e.g. `6` for muffins) |
 | `category`    | `cake`, `bread` or `muffin`. To add a new category, also add its label in `site.json` → `ui.categories`    |
 | `image`       | Path of the photo **inside `src/assets/`**, e.g. `products/breads/banana-bread.jpg`                          |
 | `featured`    | `true` shows it in the "Signature Bakes" section                                                             |
@@ -87,9 +89,10 @@ Useful fields:
 - `whatsapp`: the number in international format **without `+`** (`62895378416262`). Every WhatsApp button uses it.
 - `email`, `social.tiktok`: contact links.
 - `testimonials.items`: the "Kind Words" chat cards. Each one has `name`, `note` (what they ordered) and `messages`: a list of `{ "from": "them" | "us", "time": "12.36", "text": "original message", "en": "English translation" }`. Copy the customer's real words as they wrote them. **Privacy: use initials only (e.g. `"D."`), never full names, and leave out names of children or anyone else mentioned in the chat.** `en` is optional and only shows in English mode.
+- `orderForm`: texts of the order form, plus `customOptions` (the flavour and jam chips offered for custom cakes). Every "order" button opens this form, which then sends one tidy WhatsApp message.
 - `messages.greeting` / `messages.product`: the pre-filled WhatsApp texts. `{product}` and `{price}` are filled in automatically.
 - `gallery.items`: photos and captions for the "Display Case".
-- `custom.items`: the "Custom Cakes" grid. Each one is `{ "image": "custom/x.jpg", "style": "figure" | "vintage" | "floral", "caption": { "id", "en" } }`. `style` decides which filter chip shows it. Tapping a photo opens it large, with a WhatsApp button that names the design.
+- `custom.items`: the "Custom Cakes" grid. Each one is `{ "image": "custom/x.jpg", "style": "figure" | "vintage" | "floral", "caption": { "id", "en" } }`. `style` decides which filter chip shows it. Every design also gets its own page at `/kue/<file-name>/` (built automatically). Order messages link to that page, so WhatsApp shows the cake photo as a preview. Tapping a photo opens it large, with a WhatsApp button that names the design.
 - `seo`: the title and description shown when the link is shared on WhatsApp.
 
 ---

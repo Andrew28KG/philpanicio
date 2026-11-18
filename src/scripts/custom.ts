@@ -14,6 +14,22 @@ export function initCustom() {
   const wa = dialog.querySelector<HTMLAnchorElement>('[data-lb-wa]')!;
   const capId = dialog.querySelector<HTMLElement>('[data-lb-cap="id"]')!;
   const capEn = dialog.querySelector<HTMLElement>('[data-lb-cap="en"]')!;
+  const share = dialog.querySelector<HTMLButtonElement>('[data-lb-share]')!;
+  const shareLabel = share.querySelector<HTMLElement>('[data-share-label]')!;
+  const shareDone = share.querySelector<HTMLElement>('[data-share-done]')!;
+
+  // Share the design page: native share sheet on phones, otherwise copy the link.
+  share.addEventListener('click', async () => {
+    const url = share.dataset.link!;
+    try {
+      if (navigator.share) return await navigator.share({ title: `${share.dataset.title} · Philpanicio`, url });
+      await navigator.clipboard.writeText(url);
+      shareLabel.hidden = true;
+      shareDone.hidden = false;
+    } catch {
+      /* cancelled or not allowed: nothing to do */
+    }
+  });
 
   // ---- filters ----
   chips.forEach((chip) =>
@@ -49,6 +65,15 @@ export function initCustom() {
     wa.setAttribute('data-i18n-href-id', d.waId!);
     wa.setAttribute('data-i18n-href-en', d.waEn!);
     wa.href = currentLang() === 'en' ? d.waEn! : d.waId!;
+    // what the order form needs (scripts/order.ts)
+    wa.dataset.orderNameId = d.capId ?? '';
+    wa.dataset.orderNameEn = d.capEn ?? '';
+    wa.dataset.orderLink = d.link ?? '';
+    wa.dataset.orderImg = d.thumb ?? '';
+    share.dataset.link = d.link ?? '';
+    share.dataset.title = d.capId ?? '';
+    shareLabel.hidden = false;
+    shareDone.hidden = true;
   }
 
   function step(dir: number) {

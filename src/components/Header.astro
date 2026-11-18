@@ -3,20 +3,28 @@ import { Image } from 'astro:assets';
 import site from '../data/site.json';
 import { resolveImage } from '../lib/images';
 import T from './T.astro';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  /** true on sub-pages: section links then point back to the home page. */
+  subpage?: boolean;
+}
+const { subpage = false } = Astro.props;
+const home = subpage ? withBase('') : '';
 
 const links = [
-  { href: '#bakes', label: site.nav.bakes },
-  { href: '#gallery', label: site.nav.gallery },
-  { href: '#custom', label: site.nav.custom },
-  { href: '#story', label: site.nav.story },
-  { href: '#order', label: site.nav.order },
+  { href: `${home}#bakes`, label: site.nav.bakes },
+  { href: `${home}#gallery`, label: site.nav.gallery },
+  { href: `${home}#custom`, label: site.nav.custom },
+  { href: `${home}#story`, label: site.nav.story },
+  { href: `${home}#order`, label: site.nav.order },
 ];
 ---
 
 <a class="skip-link" href="#main"><T v={site.ui.skip} /></a>
 <header class="site-header" data-header>
   <div class="container header-inner">
-    <a class="brand" href="#top">
+    <a class="brand" href={subpage ? home : '#top'}>
       <Image
         class="brand-mark"
         src={resolveImage('brand/logo-mark.jpg')}

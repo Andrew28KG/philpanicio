@@ -8,6 +8,8 @@ import site from '../data/site.json';
 import { resolveImage } from '../lib/images';
 import { fill, i18nAttrs, type Localized } from '../lib/i18n';
 import { waLink } from '../lib/whatsapp';
+import { designUrl, slugOf } from '../lib/designs';
+import { getImage } from 'astro:assets';
 import T from './T.astro';
 import Doodle from './Doodle.astro';
 import WaIcon from './WaIcon.astro';
@@ -37,6 +39,7 @@ const cakeFor = (item: Item) => {
   const cap = captions.get(item.cake) ?? (item.note as { id: string; en: string });
   return {
     src: resolveImage(item.cake),
+    link: designUrl(slugOf(item.cake), Astro.site),
     cap,
     label: item.match === 'exact' ? testimonials.exact : testimonials.similar,
     wa: {
@@ -45,7 +48,13 @@ const cakeFor = (item: Item) => {
     },
   };
 };
-const cards = items.map((item) => ({ item, cake: cakeFor(item) }));
+const cards = await Promise.all(
+  items.map(async (item) => {
+    const cake = cakeFor(item);
+    const thumb = cake ? (await getImage({ src: cake.src, width: 160, height: 160, fit: 'cover', format: 'webp' })).src : '';
+    return { item, cake: cake && { ...cake, thumb } };
+  }),
+);
 ---
 
 <section class="section words" aria-labelledby="words-title">
@@ -147,7 +156,18 @@ const cards = items.map((item) => ({ item, cake: cakeFor(item) }));
               <p class="cm-note">
                 {item.name} · <T v={item.note} />
               </p>
-              <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: cake.wa })}>
+              <a
+                class="btn"
+                target="_blank"
+                rel="noopener"
+                {...i18nAttrs({ href: cake.wa })}
+                data-order
+                data-order-kind="custom"
+                data-order-name-id={cake.cap.id}
+                data-order-name-en={cake.cap.en}
+                data-order-link={cake.link}
+                data-order-img={cake.thumb}
+              >
                 <WaIcon />
                 <T v={testimonials.orderLike} />
               </a>

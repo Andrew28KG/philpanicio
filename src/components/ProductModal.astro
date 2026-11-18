@@ -1,6 +1,6 @@
 ---
 // Product details in a native <dialog> (focus trap, Esc to close, inert background for free).
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import site from '../data/site.json';
 import { resolveImage } from '../lib/images';
 import { formatPrice, i18nAttrs, t, type Localized } from '../lib/i18n';
@@ -22,6 +22,8 @@ const orderHref = {
   en: waLink(productMessage(product, 'en')),
 };
 const alt = { id: t(product.name, 'id'), en: t(product.name, 'en') };
+const thumb = await getImage({ src: resolveImage(product.image), width: 160, height: 160, fit: 'cover', format: 'webp' });
+const unit = product.unit ? { id: t(product.unit, 'id'), en: t(product.unit, 'en') } : null;
 ---
 
 <dialog class="modal" id={id} aria-labelledby={`${id}-title`} data-modal data-lenis-prevent>
@@ -96,7 +98,22 @@ const alt = { id: t(product.name, 'id'), en: t(product.name, 'en') };
       <div class="modal-actions" data-product-actions={product.id}>
         {
           product.available ? (
-            <a class="btn" target="_blank" rel="noopener" {...i18nAttrs({ href: orderHref })}>
+            <a
+              class="btn"
+              target="_blank"
+              rel="noopener"
+              {...i18nAttrs({ href: orderHref })}
+              data-order
+              data-order-kind="product"
+              data-order-id={product.id}
+              data-order-name-id={alt.id}
+              data-order-name-en={alt.en}
+              data-order-img={thumb.src}
+              data-order-price={product.price}
+              data-order-unit-id={unit?.id}
+              data-order-unit-en={unit?.en}
+              data-order-max={product.maxQty}
+            >
               <WaIcon />
               <T v={site.ui.orderThis} />
             </a>

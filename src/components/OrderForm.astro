@@ -1,0 +1,367 @@
+---
+// One order form for the whole page. Any element with [data-order] opens it
+// (scripts/order.ts) and fills in what is being ordered; the form then builds a
+// tidy WhatsApp message. For custom designs the message carries a link to the
+// design's own page, which WhatsApp shows as a photo preview in the chat.
+import site from '../data/site.json';
+import { getProducts } from '../lib/products';
+import { i18nAttrs, t, type Localized } from '../lib/i18n';
+import T from './T.astro';
+import WaIcon from './WaIcon.astro';
+
+const f = site.orderForm;
+const groups = [
+  { scope: 'custom', options: f.customOptions, undecided: true },
+  ...getProducts()
+    .filter((p) => p.options.length)
+    .map((p) => ({ scope: p.id, options: p.options, undecided: false })),
+];
+const plain = (v: Localized) => ({ id: t(v, 'id'), en: t(v, 'en') });
+---
+
+<dialog
+  class="order-modal"
+  id="order-form"
+  aria-labelledby="order-title"
+  data-order-form
+  data-lenis-prevent
+  data-wa={site.whatsapp}
+  data-i18n-msg={JSON.stringify(f.msg)}
+>
+  <form class="of" method="dialog" novalidate>
+    <button class="of-close" type="button" data-of-close>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      <span class="sr-only"><T v={site.ui.close} /></span>
+    </button>
+
+    <header class="of-head">
+      <h2 class="of-title" id="order-title"><T v={f.title} /></h2>
+      <p class="of-intro"><T v={f.intro} /></p>
+    </header>
+
+    <div class="of-item">
+      <img class="of-thumb" data-of-thumb alt="" width="72" height="72" />
+      <div>
+        <p class="of-kind">
+          <span data-for="custom"><T v={f.design} /></span>
+          <span data-for="product"><T v={f.product} /></span>
+        </p>
+        <p class="of-name">
+          <span class="i18n" lang="id" data-of-name="id"></span>
+          <span class="i18n" lang="en" data-of-name="en"></span>
+        </p>
+        <p class="of-price" data-of-price></p>
+      </div>
+    </div>
+
+    <div class="of-field" data-for="product">
+      <span class="of-label" id="of-qty-label"><T v={f.qty} /></span>
+      <div class="stepper" role="group" aria-labelledby="of-qty-label">
+        <button type="button" data-step="-1"><span aria-hidden="true">−</span><span class="sr-only"><T v={f.less} /></span></button>
+        <input type="number" name="qty" value="1" min="1" inputmode="numeric" aria-labelledby="of-qty-label" />
+        <button type="button" data-step="1"><span aria-hidden="true">+</span><span class="sr-only"><T v={f.more} /></span></button>
+      </div>
+      <p class="of-hint" data-of-max hidden>
+        <span class="i18n" lang="id" data-max-text={f.maxNote.id}></span>
+        <span class="i18n" lang="en" data-max-text={f.maxNote.en}></span>
+      </p>
+    </div>
+
+    {
+      groups.map(({ scope, options, undecided }) => (
+        <div class="of-options" data-options={scope} hidden>
+          {options.map((opt) => (
+            <fieldset class="of-field">
+              <legend class="of-label">
+                <T v={opt.label} />
+              </legend>
+              <div class="chips">
+                {opt.choices.map((choice, i) => (
+                  <label class="opt">
+                    <input
+                      type="radio"
+                      name={`${scope}-${opt.key}`}
+                      value={String(i)}
+                      data-label-id={t(opt.label, 'id')}
+                      data-label-en={t(opt.label, 'en')}
+                      data-id={t(choice, 'id')}
+                      data-en={t(choice, 'en')}
+                    />
+                    <span>
+                      <T v={choice} />
+                    </span>
+                  </label>
+                ))}
+                {undecided && (
+                  <label class="opt">
+                    <input type="radio" name={`${scope}-${opt.key}`} value="" checked />
+                    <span>
+                      <T v={f.undecided} />
+                    </span>
+                  </label>
+                )}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+      ))
+    }
+
+    <label class="of-field" data-for="custom">
+      <span class="of-label"><T v={f.size} /></span>
+      <input type="text" name="size" maxlength="80" {...i18nAttrs({ placeholder: plain(f.sizePh) })} data-label-id={f.size.id} data-label-en={f.size.en} />
+    </label>
+
+    <label class="of-field" data-for="custom">
+      <span class="of-label"><T v={f.cakeText} /></span>
+      <input type="text" name="cakeText" maxlength="80" {...i18nAttrs({ placeholder: plain(f.cakeTextPh) })} data-label-id={f.cakeText.id} data-label-en={f.cakeText.en} />
+    </label>
+
+    <label class="of-field">
+      <span class="of-label"><T v={f.date} /></span>
+      <input type="date" name="date" data-label-id={f.date.id} data-label-en={f.date.en} />
+      <span class="of-hint"><T v={site.order.note} /></span>
+    </label>
+
+    <label class="of-field">
+      <span class="of-label"><T v={f.name} /></span>
+      <input type="text" name="name" maxlength="60" autocomplete="name" data-label-id="Nama" data-label-en="Name" />
+    </label>
+
+    <label class="of-field">
+      <span class="of-label"><T v={f.notes} /></span>
+      <textarea name="notes" rows="3" maxlength="500" {...i18nAttrs({ placeholder: plain(f.notesPh) })} data-label-id={f.notes.id} data-label-en={f.notes.en}></textarea>
+    </label>
+
+    <p class="of-photo-note" data-for="custom"><T v={f.photoNote} /></p>
+
+    <button class="btn of-submit" type="submit">
+      <WaIcon />
+      <T v={f.submit} />
+    </button>
+  </form>
+</dialog>
+
+<style>
+  .order-modal {
+    width: min(520px, calc(100% - 1.5rem));
+    max-height: 94dvh;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .order-modal[open] {
+    animation: of-pop 0.4s var(--ease-out);
+  }
+  .order-modal::backdrop {
+    background: rgba(28, 18, 12, 0.7);
+    backdrop-filter: blur(3px);
+  }
+  .of {
+    position: relative;
+    display: grid;
+    gap: 1.1rem;
+    padding: 1.6rem 1.4rem 1.5rem;
+  }
+  .of [hidden] {
+    display: none !important;
+  }
+  .of-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+  .of-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  .of-head {
+    padding-right: 3rem;
+  }
+  .of-title {
+    font-size: 1.6rem;
+  }
+  .of-intro {
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    color: var(--text-soft);
+  }
+  .of-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-alt);
+  }
+  .of-thumb {
+    flex: none;
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: var(--surface);
+  }
+  .of-kind {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .of-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--heading);
+  }
+  .of-price {
+    font-weight: 800;
+    color: var(--brand);
+  }
+  .of-price:empty {
+    display: none;
+  }
+  .of-field {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .of-label {
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .of-hint {
+    font-size: 0.82rem;
+    color: var(--text-soft);
+  }
+  .of-options {
+    display: grid;
+    gap: 1.1rem;
+  }
+  .of input[type='text'],
+  .of input[type='date'],
+  .of input[type='number'],
+  .of textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
+    border: 0;
+    border-radius: 14px;
+    background: var(--surface-strong);
+    box-shadow: inset 0 0 0 1.5px var(--line);
+    color: var(--text);
+    font: inherit;
+    font-size: 1rem;
+  }
+  .of textarea {
+    resize: vertical;
+  }
+  .of input:focus-visible,
+  .of textarea:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--accent);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .opt {
+    position: relative;
+    cursor: pointer;
+  }
+  .opt input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .opt span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: var(--surface-strong);
+    box-shadow: inset 0 0 0 1.5px var(--line);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .opt input:checked + span {
+    background: var(--invert-bg);
+    color: var(--invert-text);
+    box-shadow: none;
+  }
+  .opt input:focus-visible + span {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .stepper button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    box-shadow: inset 0 0 0 1.5px var(--line);
+    font-size: 1.3rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .stepper input[type='number'] {
+    width: 4.5rem;
+    text-align: center;
+    -moz-appearance: textfield;
+  }
+  .stepper input::-webkit-outer-spin-button,
+  .stepper input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .of-photo-note {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+  }
+  .of-submit {
+    width: 100%;
+  }
+  @keyframes of-pop {
+    from {
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+    }
+  }
+</style>

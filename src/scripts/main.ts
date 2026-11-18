@@ -5,11 +5,13 @@ import { initModals } from './modal';
 import { initTilt } from './tilt';
 import { initGallery } from './gallery';
 import { initCustom } from './custom';
+import { initOrder } from './order';
 
 initPrefs();
 initModals();
 initGallery();
 initCustom();
+initOrder();
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 

@@ -144,6 +144,71 @@
       { "image": "custom/flower-garden-girl-cake.jpg", "style": "figure", "caption": { "id": "Taman bunga fondant", "en": "Fondant flower garden" } }
     ]
   },
+  "orderForm": {
+    "title": { "id": "Detail pesanan", "en": "Order details" },
+    "intro": {
+      "id": "Isi yang kamu tahu saja, sisanya bisa kita bahas di WhatsApp.",
+      "en": "Fill in what you know. We can sort out the rest on WhatsApp."
+    },
+    "design": { "id": "Desain pilihan", "en": "Chosen design" },
+    "product": { "id": "Produk", "en": "Product" },
+    "qty": { "id": "Jumlah", "en": "Quantity" },
+    "less": { "id": "Kurangi", "en": "Fewer" },
+    "more": { "id": "Tambah", "en": "More" },
+    "maxNote": { "id": "Maksimal {max} per pesanan", "en": "Up to {max} per order" },
+    "date": { "id": "Tanggal dibutuhkan", "en": "Date needed" },
+    "size": { "id": "Ukuran atau jumlah porsi", "en": "Size or number of servings" },
+    "sizePh": { "id": "mis. 18 cm, atau untuk 20 orang", "en": "e.g. 18 cm, or for 20 people" },
+    "cakeText": { "id": "Tulisan di kue (opsional)", "en": "Text on the cake (optional)" },
+    "cakeTextPh": { "id": "mis. Happy Birthday", "en": "e.g. Happy Birthday" },
+    "name": { "id": "Nama kamu", "en": "Your name" },
+    "notes": { "id": "Catatan (opsional)", "en": "Notes (optional)" },
+    "notesPh": { "id": "Warna, tema, alergi, atau ide lainnya", "en": "Colours, theme, allergies or other ideas" },
+    "undecided": { "id": "Belum tahu", "en": "Not sure yet" },
+    "photoNote": {
+      "id": "Link foto desain ikut terkirim, jadi Phillip langsung lihat kuenya di chat.",
+      "en": "A link to the design photo is included, so Phillip sees the cake right in the chat."
+    },
+    "submit": { "id": "Kirim lewat WhatsApp", "en": "Send on WhatsApp" },
+    "share": { "id": "Bagikan desain", "en": "Share design" },
+    "copied": { "id": "Link disalin!", "en": "Link copied!" },
+    "customOptions": [
+      {
+        "key": "flavour",
+        "label": { "id": "Rasa kue", "en": "Cake flavour" },
+        "choices": [
+          { "id": "Vanilla", "en": "Vanilla" },
+          { "id": "Coklat", "en": "Chocolate" },
+          { "id": "Pandan", "en": "Pandan" }
+        ]
+      },
+      {
+        "key": "jam",
+        "label": { "id": "Selai", "en": "Jam" },
+        "choices": [
+          { "id": "Strawberry", "en": "Strawberry" },
+          { "id": "Keju", "en": "Cheese" },
+          { "id": "Coklat", "en": "Chocolate" }
+        ]
+      }
+    ],
+    "msg": {
+      "customIntro": { "id": "Halo Philpanicio! Saya mau pesan kue custom 🎂", "en": "Hi Philpanicio! I'd like to order a custom cake 🎂" },
+      "productIntro": { "id": "Halo Philpanicio! Saya mau pesan:", "en": "Hi Philpanicio! I'd like to order:" },
+      "design": { "id": "Desain", "en": "Design" },
+      "reference": { "id": "Foto referensi", "en": "Reference photo" },
+      "total": { "id": "Total", "en": "Total" },
+      "thanks": { "id": "Terima kasih! 😊", "en": "Thank you! 😊" }
+    }
+  },
+  "designPage": {
+    "back": { "id": "Lihat semua desain", "en": "See all designs" },
+    "more": { "id": "Desain lainnya", "en": "More designs" },
+    "body": {
+      "id": "Kue custom buatan tangan Phillip. Bisa dibuat ulang dengan warna, rasa, ukuran, dan tulisan sesuai keinginanmu.",
+      "en": "A custom cake handmade by Phillip. It can be made again with the colours, flavour, size and lettering you want."
+    }
+  },
   "story": {
     "eyebrow": { "id": "Kenalan dengan baker-nya", "en": "Meet the baker" },
     "title": { "id": "Cerita Kami", "en": "Our Story" },

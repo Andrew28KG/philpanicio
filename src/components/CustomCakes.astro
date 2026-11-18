@@ -6,6 +6,7 @@ import site from '../data/site.json';
 import { resolveImage } from '../lib/images';
 import { fill, i18nAttrs, type Localized } from '../lib/i18n';
 import { waLink } from '../lib/whatsapp';
+import { designUrl, slugOf } from '../lib/designs';
 import T from './T.astro';
 import Doodle from './Doodle.astro';
 import WaIcon from './WaIcon.astro';
@@ -18,12 +19,16 @@ const items = await Promise.all(
   custom.items.map(async (item) => {
     const src = resolveImage(item.image);
     const full = await getImage({ src, width: 1000, format: 'webp' });
+    const thumb = await getImage({ src, width: 160, height: 160, fit: 'cover', format: 'webp' });
+    const link = designUrl(slugOf(item.image), Astro.site);
     const caption = item.caption as Localized;
     const cap = typeof caption === 'string' ? { id: caption, en: caption } : caption;
     return {
       ...item,
       src,
       full: full.src,
+      thumb: thumb.src,
+      link,
       cap,
       wa: {
         id: waLink(fill(messages.customDesign.id, { design: cap.id })),
@@ -72,6 +77,8 @@ const items = await Promise.all(
               data-cap-en={item.cap.en}
               data-wa-id={item.wa.id}
               data-wa-en={item.wa.en}
+              data-link={item.link}
+              data-thumb={item.thumb}
             >
               <Picture
                 src={item.src}
@@ -124,10 +131,15 @@ const items = await Promise.all(
           <span class="i18n" lang="id" data-lb-cap="id"></span>
           <span class="i18n" lang="en" data-lb-cap="en"></span>
         </p>
-        <a class="btn" target="_blank" rel="noopener" data-lb-wa>
+        <a class="btn" target="_blank" rel="noopener" data-lb-wa data-order data-order-kind="custom">
           <WaIcon />
           <T v={custom.orderThis} />
         </a>
+        <button class="btn btn-ghost lb-share" type="button" data-lb-share>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg>
+          <span data-share-label><T v={site.orderForm.share} /></span>
+          <span data-share-done hidden><T v={site.orderForm.copied} /></span>
+        </button>
       </div>
     </div>
   </dialog>
@@ -374,6 +386,9 @@ const items = await Promise.all(
   }
   .lb-body .btn {
     width: 100%;
+  }
+  .lb-share {
+    min-height: 46px;
   }
 
   @keyframes lb-pop {
